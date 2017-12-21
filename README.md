@@ -1,34 +1,16 @@
-# antd-mobile Samples
+# react with webpack
 
-Note: **The master branch is antd-mobile@2 samples**
+basic proj demo with webpack@2 and tree-shaking
 
-If you need antd-mobile@1.x samples, please see [1.x branch](https://github.com/ant-design/antd-mobile-samples/tree/1.x)
+### Install & Start
 
-
-### Requirements
-
-```
-node@4+
-npm@3+
+```shell
+npm i  # npm i --save-dev webpack@2 webpack-dev-server@2 extract-text-webpack-plugin
+npm start
 ```
 
-## Samples link
+open http://localhost:8000/
 
-- [web-basic](./web-webpack)
-- [rn-basic](./react-native)
-- [web-typescript](./web-typescript)
-- [web-custom-ui](./web-custom-ui)
-- [rn-custom-ui](./rn-custom-ui)
-- [rn-expo](./rn-expo) React-Native Demo with [Expo](https://expo.io/)
-- [web-ssr](./rn-expo) Web Server Side Render Demo with [Next.js](https://github.com/zeit/next.js/)
+### npm run-script build
 
 
-## Directory naming conventions
-
-e.g. typescript samples
-
-- typescript (web + rn)
-- web-typescript (pure web)
-- rn-typescript (iOS + Android, not include web)
-- ios-typescript (pure iOS)
-- android-typescript (pure Android)
