@@ -28,7 +28,16 @@ const postcssOpts = {
 module.exports = {
   devtool: 'source-map', // or 'inline-source-map'
   devServer: {
-    disableHostCheck: true
+    disableHostCheck: true,
+    proxy: {
+      "/api": {
+        target: "http://localhost:3003",
+        pathRewrite: {"^/api" : ""}
+      }
+      // '/api/*': {
+      //   target: 'http://localhost:3003',
+      // }
+    },
   },
 
   entry: { "index": path.resolve(__dirname, 'src/index') },
