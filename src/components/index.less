@@ -137,7 +137,22 @@
     }
   }
 }
+.am-tab-bar-item {
+  height: inherit;
+  .policy {
+    height: inherit;
+  }
+  .policy-null {
+    text-align: center;
+    margin-top: 20rem;
+  }
+  .policy-null-content {
+    margin-top: 2rem;
+    color: #d6d4d4;
+  }
+}
 .policy-list {
+  height: inherit;
   .policy-tabs {
     height: 4rem;
     line-height: 4rem;
@@ -150,53 +165,13 @@
       }
     }
   }
+  .am-tabs-tab-bar-wrap {
+    position: fixed;
+    width: 100%;
+    z-index: 1200;
+  }
   .policy-area {
-    .policy-order {
-      width: 85%;
-      margin: 0 auto;
-      margin-top: 2rem;
-      background: #F8F7FC;
-      border: 1px #ddd solid;
-      border-radius: 1rem;
-      .order-title {
-        border-bottom: 1px #ddd solid;
-        border-bottom: 1px solid #ddd;
-        background: #fff;
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
-        background: #FFFFFF;
-        padding: 1rem;
-        .order-title-name {
-          font-size: 1.4rem;
-          height: 2.4rem;
-          line-height: 2.4rem;
-          padding-left: 1rem;
-          color: rgb(51, 163, 244);
-        }
-        .order-title-intr {
-          height: 2rem;
-          line-height: 2rem;
-          .order-title-content {
-            display: inline-block;
-            width: 80%;
-            padding-left: 1rem;
-            color: #949494;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-        }
-      }
-      .order-content {
-        padding: 1rem;
-        .order-item {
-          height: 2rem;
-          line-height: 2rem;
-          padding-left: 1rem;
-          color: #C9AB84;
-        }
-      }
-    }
+    margin-top: 4rem;
   }
 }
 .my {

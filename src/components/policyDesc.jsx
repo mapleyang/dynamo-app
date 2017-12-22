@@ -16,41 +16,36 @@ const detail = {
   "content": "住院医疗保险金，100万/人特许医疗"
 }
 
-class PolicyDetail extends Component {
+class PolicyDesc extends Component {
   constructor(props, context) {
     super(props)
     this.state = {
+      data: ['', '', ''],
     }
   }
 
-  componentWillMount () {
-    let param = location.hash.slice(18);
-    let index = param.indexOf("&");
-    let id = param.slice(0, index);
-    this.getPolicyDetail(id);
-  }
-
-  //获取保单交易详情
-  getPolicyDetail (id) {
-    const _this = this;
-    let url = `/api/policies/${id}/detail`;
-    let data = {};
-    AjaxJson.getResponse(url, data, "GET").then((value) => {
-      if(value.status === 2000) {
-        value.data.map(el => {
-          el.label = el.name;
-          el.value = el.orgId;
-          return el
-        })
-        _this.setState({
-          orgData: value
-        })
-      }
-    }, (value) => {})
+  componentDidMount () {
   }
 
   headerBackClick () {
     window.history.back()
+  }
+
+  saveClick () {
+    let policy = {
+      base: "",
+      product: {
+        id: detail.id,
+        category: detail.detail,
+        title: detail.title,
+        content: detail.content
+      },
+      promise: "",
+      scheduleData: "",
+      reportData: "",
+    }
+    sessionStorage.setItem("policy", JSON.stringify(policy))
+    location.hash = "/flow";
   }
 
   render() {
@@ -81,10 +76,11 @@ class PolicyDetail extends Component {
             </Card.Body>
             <Card.Footer extra={<div style={{color: "#199ed8"}}>保险条款详情</div>} />
           </Card>
+          <Button style={{margin: "2rem"}} type="ghost" onClick={this.saveClick.bind(this)}>立即投保</Button>
         </div>
       </div>
     );
   }
 }
 
-export default PolicyDetail;
+export default PolicyDesc;

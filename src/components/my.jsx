@@ -21,7 +21,7 @@ class My extends Component {
         <div className="my-area">
           <div className="my-intr">
             <div className="my-intr-title">
-              <img src="../static/img.jpg" />
+              <img src="../static/img.svg" />
             </div>
             <Flex className="my-intr-info">
               <Flex.Item>

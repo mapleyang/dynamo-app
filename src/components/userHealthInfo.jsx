@@ -31,6 +31,7 @@ class UserHealthInfo extends Component {
   }
 
   componentWillMount () {
+    this.getOrgs();
     let policy = JSON.parse(sessionStorage.getItem("policy"));
     if(policy.scheduleData) {
       this.setState({
@@ -43,17 +44,23 @@ class UserHealthInfo extends Component {
         reportData: policy.reportData
       })
     }
-    // this.getOrgs();
   }
 
   //获取体检机构列表
   getOrgs () {
     const _this = this;
-    let url = "";
+    let url = "/api/institutions";
     let data = {};
     AjaxJson.getResponse(url, data, "GET").then((value) => {
       if(value.status === 2000) {
-
+        value.data.map(el => {
+          el.label = el.name;
+          el.value = el.orgId;
+          return el
+        })
+        _this.setState({
+          orgData: value
+        })
       }
     }, (value) => {})
   }
@@ -141,27 +148,27 @@ class UserHealthInfo extends Component {
           </List>
           <List renderHeader={() => '个人健康情况'}>
             <InputItem
-            {...getFieldProps('weightExponent', {initialValue: this.state.reportData ? this.state.reportData.metadata.weightExponent : ""},)}
+            {...getFieldProps('weightExponent', {initialValue: this.state.reportData.metadata ? this.state.reportData.metadata.weightExponent : ""},)}
             clear>
               体重指数
             </InputItem>
             <InputItem
-            {...getFieldProps('bloodpressureExponent', {initialValue: this.state.reportData ? this.state.reportData.metadata.bloodpressureExponent : ""})}
+            {...getFieldProps('bloodpressureExponent', {initialValue: this.state.reportData.metadata ? this.state.reportData.metadata.bloodpressureExponent : ""})}
             clear>
               血压
             </InputItem>
             <InputItem
-            {...getFieldProps('pulsepressureExponent', {initialValue: this.state.reportData ? this.state.reportData.metadata.pulsepressureExponent : ""})}
+            {...getFieldProps('pulsepressureExponent', {initialValue: this.state.reportData.metadata ? this.state.reportData.metadata.pulsepressureExponent : ""})}
             clear>
               脉压
             </InputItem>
             <InputItem
-            {...getFieldProps('plateletCount', {initialValue: this.state.reportData ? this.state.reportData.metadata.plateletCount : ""})}
+            {...getFieldProps('plateletCount', {initialValue: this.state.reportData.metadata ? this.state.reportData.metadata.plateletCount : ""})}
             clear>
               血小板数
             </InputItem>
             <InputItem
-            {...getFieldProps('serum', {initialValue: this.state.reportData ? this.state.reportData.metadata.serum : ""})}
+            {...getFieldProps('serum', {initialValue: this.state.reportData.metadata ? this.state.reportData.metadata.serum : ""})}
             clear>
               甘油三酯
             </InputItem>
