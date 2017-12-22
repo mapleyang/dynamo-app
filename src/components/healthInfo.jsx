@@ -2,62 +2,136 @@ import React, { Component } from 'react'
 import './index.less'
 import classnames from "classnames";
 import AjaxJson from "../utils/ajaxJson"
-import { Icon, List ,Checkbox, TextareaItem, Button } from 'antd-mobile';
+import { Icon, List ,Checkbox, TextareaItem, Button, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 const Item = List.Item;
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
+const agreeContent = "声明：本人承诺完全知晓本人的健康状况，确认健康告知内容属实。如有隐瞒或不实告知，保险公司有权解除保险合同，对于合同解除前发生的任何事故，保险公司不承担任何责任，并不退还保险费。";
 
 
 class HealthInfo extends Component {
   constructor(props, context) {
     super(props)
     this.state = {
+      promise: "",
+      desc: "",
       data: [{
         name: "angiocarpy",
-        label: "心血管系统疾病",
-        value: "1",
+        select: false,
+        label: "是否存在心血管系统疾病",
+        value: "1"
       }, {
         name: "breathing",
-        label: "呼吸系统疾病",
+        select: false,
+        label: "是否存在呼吸系统疾病",
         value: "2"
       }, {
         name: "digestive",
-        label: "消化系统疾病",
+        select: false,
+        label: "是否存在消化系统疾病",
         value: "3"
       }, {
         name: "disability",
-        label: "残疾或功能障碍",
+        select: false,
+        label: "是否存在残疾或功能障碍",
         value: "4"
       }],
     }
   }
 
+  componentWillMount () {
+    let policy = JSON.parse(sessionStorage.getItem("policy"));
+    if(policy.promise) {
+      let tempPolicy = [];
+      let data = this.state.data.map(el => {
+        if(policy.promise && policy.promise.length !== 0) {
+          tempPolicy = policy.promise.map(item => {
+            if(el.label === item.content) {
+              el.select = item.result === "是" ? true : false;
+              item.flag = true;
+            }
+            return item
+          })
+        }
+        return el
+      })
+      let desc = "";
+      tempPolicy.forEach(el => {
+        if(!el.flag && el.content !== agreeContent) {
+          desc = el.content;
+        }
+      })
+      this.setState({
+        promise: policy.promise,
+        data: data,
+        desc: desc
+      })
+    }
+  }
+
   componentDidMount () {
+    // this.getHealthInfo();
   }
 
   headerBackClick () {
     window.history.back()
   }
 
-   onChange = (val) => {
-    console.log(val);
+  onChange = (val) => {
+    let data = this.state.data.map(el => {
+      if(el.value === val) {
+        el.select = !el.select;
+      }
+      return el
+    });
+    this.setState({
+      data: data
+    })
   }
 
   saveClick () {
     const _this = this;
     this.props.form.validateFields((error, value) => {
       if(!error) {
+        let promise = this.state.data.map(el => {
+          let item = {};
+          item.result = el.select ? "是" : "否";
+          item.content = el.label;
+          return item;
+        })
+        promise.push({
+          result: "是",
+          content: agreeContent
+        })
+        if(value.other !== undefined) {
+          promise.push({
+            result: "是",
+            content: value.other
+          })
+        }
+        else {
+          promise.push({
+            result: "是",
+            content: value.other
+          })
+        }
         let url = "/api/policies";  
-        let data = {};
-        AjaxJson.getResponse(url, data, "POST").then((value) => {
-          if(value.status = 2000) {
-            window.history.back()
-          }
-        }, (value) => {})
+        let data = {
+          promise: promise
+        }
+        let policy = JSON.parse(sessionStorage.getItem("policy"))
+        policy.promise = promise;
+        sessionStorage.setItem("policy", JSON.stringify(policy))
+        window.history.back()
+        // AjaxJson.getResponse(url, data, "PUT").then((value) => {
+        //   if(value.status = 2000) {
+        //     // window.history.back()
+        //   }
+        // }, (value) => {})
       }
       else {    //输入提示
-
+        Toast.fail('请详细阅读声明，请选择同意！！！', 1);
       }
     });
   }
@@ -77,6 +151,7 @@ class HealthInfo extends Component {
             {this.state.data.map(el => (
               <CheckboxItem 
               {...getFieldProps(el.name)}
+              checked={el.select}
               onChange={() => this.onChange(el.value)}>
                 {el.label}
               </CheckboxItem>
@@ -84,15 +159,19 @@ class HealthInfo extends Component {
           </List>
           <List renderHeader={() => '是否有其他疾病？'}>
             <TextareaItem
-              {...getFieldProps('count', {
-                initialValue: '请描述您的患病情况...',
+              {...getFieldProps('other', {initialValue: this.state.desc ? this.state.desc : ""}, {
               })}
               rows={5}
               count={100}
+              placeholder="请描述您的患病情况..."
             />
           </List>
-          <AgreeItem className="agree-content" data-seed="statementId">
-            声明：本人承诺完全知晓本人的健康状况，确认健康告知内容属实。如有隐瞒或不实告知，保险公司有权解除保险合同，对于合同解除前发生的任何事故，保险公司不承担任何责任，并不退还保险费。
+          <AgreeItem 
+          {...getFieldProps("agreeItem", {
+            rules: [{ required: true, message: '请选择是否同意声明条款' }],
+          })}
+          className="agree-content" data-seed="statementId">
+            {agreeContent}
           </AgreeItem>
           <Button style={{margin: "2rem"}} type="ghost" onClick={this.saveClick.bind(this)}>保存</Button>
         </div>

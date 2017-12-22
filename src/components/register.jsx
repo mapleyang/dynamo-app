@@ -6,8 +6,6 @@ import { Icon, List, InputItem, Button  } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import md5 from "md5";
 const Item = List.Item;
-
-
 class Register extends Component {
   constructor(props, context) {
     super(props)
@@ -30,14 +28,14 @@ class Register extends Component {
         let url = "/api/register";  
         let timestamp = Date.now();
         let data = {
-          mobile: value.mobile,
+          mobile: value.mobile.replace(/\s+/g,""),
+          email: value.email.trim(),
           password: md5(value.password),
-          timestamp: timestamp,
-          verfiyCode: "",
-          sig: md5(value.mobile + value.password + timestamp)
         };
         AjaxJson.getResponse(url, data, "PUT").then((value) => {
-          window.history.back();
+           if(value.status === 2000) {
+            window.history.back();
+           }
         }, (value) => {})
       }
       else {    //输入提示
@@ -59,14 +57,22 @@ class Register extends Component {
         <div className="login-content tab-content">
           <div className="login-form">
             <List renderHeader={() => ''}>
-               <InputItem
+              <InputItem
+                {...getFieldProps('email', {
+                  rules: [{ required: true, message: '请输入您的邮箱' }],
+                })}
+                placeholder="请输入手机号"
+              >
+                <div style={{ backgroundImage: 'url(../static/Phone.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
+              </InputItem>
+              <InputItem
                type="phone"
                 {...getFieldProps('mobile', {
                   rules: [{ required: true, message: '请输入手机号' }],
                 })}
                 placeholder="请输入手机号"
               >
-                <div style={{ backgroundImage: 'url(./user.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
+                <div style={{ backgroundImage: 'url(../static/Phone.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
               </InputItem>
               <InputItem
                 type="password"
@@ -75,10 +81,10 @@ class Register extends Component {
                 })}
                 placeholder="请设置您的密码"
               >
-                <div style={{ backgroundImage: 'url(./password.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
+                <div style={{ backgroundImage: 'url(../static/password.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
               </InputItem>
             </List>
-            <Button type="ghost" className={classnames({
+            <Button type="primary" className={classnames({
               "login-button": true,
               "login-button-disabel": this.state.loginVisble
             })} onClick={this.registerClick.bind(this)}>注册</Button>

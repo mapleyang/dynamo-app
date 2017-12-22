@@ -8,6 +8,7 @@ const Item = List.Item;
 
 const detail = {
   "id": "1000001",
+  category: "001",
   "title": "太健康·百万全家桶",
   "img": "insurance0",
   "age": "90天至60周岁",
@@ -31,6 +32,19 @@ class PolicyDetail extends Component {
   }
 
   saveClick () {
+    let policy = {
+      base: "",
+      product: {
+        id: detail.id,
+        category: detail.detail,
+        title: detail.title,
+        content: detail.content
+      },
+      promise: "",
+      scheduleData: "",
+      reportData: "",
+    }
+    sessionStorage.setItem("policy", JSON.stringify(policy))
     location.hash = "/flow";
   }
 
@@ -47,7 +61,7 @@ class PolicyDetail extends Component {
           <Card>
             <Card.Header
               title="太健康·百万全家桶"
-              thumb="./insurance0.jpg"/>
+              thumb="../static/insurance0.jpg"/>
             <Card.Body>
               <List renderHeader={() => '保障全、双豁免、满期返更增值'}>
                 <Item>重疾轻症保障全</Item>

@@ -35,17 +35,16 @@ class Login extends Component {
         let url = "/api/login";  
         let timestamp = Date.now();
         let data = {
-          mobile: value.mobile,
+          email: value.mobile,
           password: md5(value.password),
-          timestamp: timestamp,
-          verfiyCode: "",
-          sig: md5(value.mobile + value.password + timestamp)
         };
         AjaxJson.getResponse(url, data, "POST").then((value) => {
-          location.hash = "/"
-          // if(value.status = 2000) {
-          //   sessionStorage.setItem("user", true);
-          // }
+          if(value.status = 2000) {
+            if(value.token !== undefined) {
+              sessionStorage.setItem("user", value);
+              location.hash = "/"
+            }
+          }
         }, (value) => {})
       }
       else {    //输入提示
@@ -71,13 +70,12 @@ class Login extends Component {
           <div className="login-form">
             <List renderHeader={() => ''}>
                <InputItem
-                type="phone"
                 {...getFieldProps('mobile', {
                     rules: [{ required: true, message: '请输入手机号' }],
                   })}
                 placeholder="请输入手机号"
               >
-                <div style={{ backgroundImage: 'url(./Phone.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
+                <div style={{ backgroundImage: 'url(../static/Phone.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
               </InputItem>
               <InputItem
                 type="password"
@@ -86,7 +84,7 @@ class Login extends Component {
                 })}
                 placeholder="请输入密码"
               >
-                <div style={{ backgroundImage: 'url(./password.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
+                <div style={{ backgroundImage: 'url(../static/password.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
               </InputItem>
             </List>
             <Button type="primary" className={classnames({

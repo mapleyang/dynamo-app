@@ -5,29 +5,45 @@ import AjaxJson from "../utils/ajaxJson"
 import { Icon, List, InputItem, Picker, ImagePicker, Button, DatePicker} from 'antd-mobile';
 import { createForm } from 'rc-form';
 const Item = List.Item;
-
+const nowTimeStamp = Date.now();
+const now = new Date(nowTimeStamp);
 
 class UserHealthInfo extends Component {
   constructor(props, context) {
     super(props)
     this.state = {
+      date: now,
       data: ['', '', ''],
+      orgID: "",
       files: [],
+      reportData: {},
       orgData: [{
         label: "北京知春路分店",
-        value: "1",
+        value: "100001",
       },{
         label: "北京上地分店",
-        value: "2",
+        value: "100002",
       },{
         label: "北京中关村分店",
-        value: "3",
+        value: "100003",
       }],
     }
   }
 
   componentWillMount () {
-    this.getOrgs();
+    let policy = JSON.parse(sessionStorage.getItem("policy"));
+    if(policy.scheduleData) {
+      this.setState({
+        date: new Date(policy.scheduleData.date),
+        orgID: policy.scheduleData.orgID || ""
+      })
+    }
+    if(policy.reportData) {
+      this.setState({
+        reportData: policy.reportData
+      })
+    }
+    // this.getOrgs();
   }
 
   //获取体检机构列表
@@ -36,7 +52,8 @@ class UserHealthInfo extends Component {
     let url = "";
     let data = {};
     AjaxJson.getResponse(url, data, "GET").then((value) => {
-      if(value.status = 2000) {
+      if(value.status === 2000) {
+
       }
     }, (value) => {})
   }
@@ -57,12 +74,36 @@ class UserHealthInfo extends Component {
     this.props.form.validateFields((error, value) => {
       if(!error) {
         let url = "/api/policies";  
-        let data = {};
-        AjaxJson.getResponse(url, data, "POST").then((value) => {
-          if(value.status = 2000) {
-            window.history.back()
+        let orgID = value.orgID && value.orgID.length !== 0 ? value.orgID[0] : "";
+        let date = new Date(this.state.date);
+        let scheduleData = {
+          date: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
+          orgID: orgID
+        };
+        let reportData = {
+          orgID: orgID,
+          metadata: {
+            weightExponent: value.weightExponent || "",
+            bloodpressureExponent: value.bloodpressureExponent || "",
+            pulsepressureExponent: value.pulsepressureExponent || "",
+            plateletCount: value.plateletCount || "",
+            serum: value.serum || ""
           }
-        }, (value) => {})
+        }
+        let data = {
+          scheduleData,
+          reportData
+        }
+        let policy = JSON.parse(sessionStorage.getItem("policy"))
+        policy.scheduleData = scheduleData;
+        policy.reportData = reportData;
+        sessionStorage.setItem("policy", JSON.stringify(policy))
+        window.history.back()
+        // AjaxJson.getResponse(url, data, "PUT").then((value) => {
+        //   if(value.status === 2000) {
+        //     window.history.back()
+        //   }
+        // }, (value) => {})
       }
       else {    //输入提示
 
@@ -85,39 +126,42 @@ class UserHealthInfo extends Component {
             <Picker 
               data={this.state.orgData} 
               cols={1} 
-              {...getFieldProps('orgName')}>
+              {...getFieldProps('orgID', {
+                initialValue: [this.state.orgID || ""],
+              })}>
               <List.Item arrow="horizontal">体检机构</List.Item>
             </Picker>
             <DatePicker
               mode="date"
               title="选择日期"
-              {...getFieldProps('orgTime')}>
+              value={this.state.date}
+              onChange={date => this.setState({ date })}>
               <List.Item arrow="horizontal">体检日期</List.Item>
             </DatePicker>
           </List>
           <List renderHeader={() => '个人健康情况'}>
             <InputItem
-            {...getFieldProps('weightExponent')}
+            {...getFieldProps('weightExponent', {initialValue: this.state.reportData ? this.state.reportData.metadata.weightExponent : ""},)}
             clear>
               体重指数
             </InputItem>
             <InputItem
-            {...getFieldProps('bloodpressureExponent')}
+            {...getFieldProps('bloodpressureExponent', {initialValue: this.state.reportData ? this.state.reportData.metadata.bloodpressureExponent : ""})}
             clear>
               血压
             </InputItem>
             <InputItem
-            {...getFieldProps('pulsepressureExponent')}
+            {...getFieldProps('pulsepressureExponent', {initialValue: this.state.reportData ? this.state.reportData.metadata.pulsepressureExponent : ""})}
             clear>
               脉压
             </InputItem>
             <InputItem
-            {...getFieldProps('plateletCount')}
+            {...getFieldProps('plateletCount', {initialValue: this.state.reportData ? this.state.reportData.metadata.plateletCount : ""})}
             clear>
               血小板数
             </InputItem>
             <InputItem
-            {...getFieldProps('serum')}
+            {...getFieldProps('serum', {initialValue: this.state.reportData ? this.state.reportData.metadata.serum : ""})}
             clear>
               甘油三酯
             </InputItem>

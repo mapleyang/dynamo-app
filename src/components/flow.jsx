@@ -34,10 +34,32 @@ class Flow extends Component {
     this.state = {
       data: ['', '', ''],
       price: "",
+      timePrice: "",
+      base: "",
+      promise: "",
+      reportData: ""
     }
   }
 
-  componentDidMount () {
+  componentWillMount () {
+    let policy = JSON.parse(sessionStorage.getItem("policy"))
+    let base = "";
+    let promise = "";
+    let reportData = "";
+    if(policy.base) {
+      base = policy.base;
+    }
+    if(policy.promise) {
+      promise = policy.promise;
+    }
+    if(policy.reportData) {
+      reportData = policy.reportData;
+    }
+    this.setState({
+      base: base,
+      promise: promise,
+      reportData: reportData
+    })
   }
 
   headerBackClick () {
@@ -52,13 +74,24 @@ class Flow extends Component {
     district.forEach(el => {
       if(value[0] === el.value) {
         this.setState({
-          price: el.price
+          price: el.price,
+          timeRange: el.value,
         })   
       }
     })
   }
 
-  saveClick () {}
+  saveClick () {
+    let policy = JSON.parse(sessionStorage.getItem("policy"))
+    let url = "/api/policies"; 
+    policy.base.timeRange = this.state.timeRange;
+    policy.product.price = this.state.price.toString();
+    AjaxJson.getResponse(url, policy, "PUT").then((value) => {
+      if(value.status = 2000) {
+
+      }
+    }, (value) => {})
+  }
 
 
   render() {
@@ -73,16 +106,18 @@ class Flow extends Component {
         </div>
         <div className="flow-content tab-content">
           <List className="my-list" renderHeader={() => '个人信息'}>
-            <Item arrow="horizontal" onClick={this.infoFillClick.bind(this, "baseinfo")}>
-              投保信息
+            <Item arrow="horizontal" extra={this.state.base ? this.state.base.holderName : ""} onClick={this.infoFillClick.bind(this, "baseinfo")}>
+              投保人信息
             </Item>
             <Item
               arrow="horizontal"
+              extra={this.state.promise ? "已完成" : ""}
               onClick={this.infoFillClick.bind(this, "healthinfo")}>
               健康告知
             </Item>
             <Item
               arrow="horizontal"
+              extra={this.state.reportData ? "已完成" : ""}
               onClick={this.infoFillClick.bind(this, "userhealthinfo")}>
               健康数据
             </Item>
@@ -91,7 +126,6 @@ class Flow extends Component {
             <Picker 
               data={district} 
               cols={1} 
-              {...getFieldProps('timeRange')}
               onOk={this.timeRangeChange.bind(this)}>
               <List.Item arrow="horizontal">保险时常</List.Item>
             </Picker>

@@ -21,56 +21,56 @@ class My extends Component {
         <div className="my-area">
           <div className="my-intr">
             <div className="my-intr-title">
-              <img src="./img.jpg" />
+              <img src="../static/img.jpg" />
             </div>
             <Flex className="my-intr-info">
               <Flex.Item>
-                <img src="./label.svg"/>
+                <img src="../static/label.svg"/>
                 <span style={{color: "#fff"}}>我的电子凭证</span>
               </Flex.Item>
               <Flex.Item>
-                <img src="./lock.svg"/>
+                <img src="../static/lock.svg"/>
                 <span style={{color: "#fff"}}>区块链信息</span>
               </Flex.Item>
             </Flex>
           </div>
           <List className="my-list-certificate" renderHeader={() => ''}>
             <Item
-              thumb="./key.svg"
-              extra="adscadf1313241"
+              thumb="../static/key.svg"
+              extra=""
               onClick={() => {}}
               className="list-item-font"
             >我的区块密钥</Item>
             <Item
-              thumb="./address.svg"
+              thumb="../static/address.svg"
               onClick={() => {}}
               className="list-item-font"
-              extra="casdagsadsga">
+              extra="">
               我的区块地址
             </Item>
           </List>
           <List className="my-list-certificate" renderHeader={() => ''}>
             <Item
-              thumb="./order.svg"
+              thumb="../static/order.svg"
               onClick={() => {}}
               arrow="horizontal"
             >我的保单</Item>
             <Item
-              thumb="./data.svg"
+              thumb="../static/data.svg"
               onClick={() => {}}
               arrow="horizontal">
               我的健康数据
             </Item>
             <Item
-              thumb="./authorize.svg"
+              thumb="../static/authorize.svg"
               onClick={() => {}}
               arrow="horizontal"
             >数据授权</Item>
           </List>
           <List className="my-list-certificate" renderHeader={() => ''}>
             <Item
-              thumb="./setting.svg"
-              onClick={() => {}}
+              thumb="../static/setting.svg"
+              onClick={() => {location.hash = "/logout"}}
               arrow="horizontal"
             >设置</Item>
           </List>

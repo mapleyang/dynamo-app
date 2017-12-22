@@ -3,7 +3,13 @@ const AjaxJson = {
   /*异步操作*/
   getResponse: (url, data, type) => {
     let promise = new Promise(function(resolve, reject) {
-      AjaxJson.Ajax(url, data, type, resolve, reject)
+      let user = sessionStorage.getItem("user")
+      if(user !== undefined) {
+        AjaxJson.Ajax(url, data, type, resolve, reject)
+      }
+      else {
+        location.hash = "/login"
+      }
     })
     return promise;
   },
