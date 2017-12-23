@@ -75,7 +75,7 @@ class Login extends Component {
                   })}
                 placeholder="请输入手机号"
               >
-                <div style={{ backgroundImage: 'url(../static/Phone.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
+                <div style={{ backgroundImage: 'url(./static/Phone.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
               </InputItem>
               <InputItem
                 type="password"
@@ -84,7 +84,7 @@ class Login extends Component {
                 })}
                 placeholder="请输入密码"
               >
-                <div style={{ backgroundImage: 'url(../static/password.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
+                <div style={{ backgroundImage: 'url(./static/password.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
               </InputItem>
             </List>
             <Button type="primary" className={classnames({

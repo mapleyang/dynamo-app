@@ -95,7 +95,7 @@ class Policy extends Component {
         borderBottom: '1px solid #F6F6F6',
       }}>{value.createTime}<span style={{float: "right", color: '#FF6E27'}}>{value.stateContent}</span></div>
       <div style={{ display: '-webkit-box', display: 'flex', padding: '1.2rem 0' }}>
-        <img style={{ height: '5.2rem', marginRight: '1.2rem' }} src={"../static/insurance" + img + ".jpg"} alt="" />
+        <img style={{ height: '5.2rem', marginRight: '1.2rem' }} src={"./static/insurance" + img + ".jpg"} alt="" />
         <div style={{ lineHeight: 1 }}>
           <div style={{ marginBottom: '0.8rem', fontWeight: 'bold' }}>{value.mainContent}</div>
           <div style={{ paddingTop: '2rem', color: '#FF6E27' }}><span>查看保单详情>></span></div>
@@ -130,7 +130,7 @@ class Policy extends Component {
 
   getNullPolicy () {
     return <div className="policy-null">
-      <img style={{width: "10rem"}} src="../static/null.svg" />
+      <img style={{width: "10rem"}} src="./static/null.svg" />
       <div className="policy-null-content">可以去看看有哪些保险产品</div>
     </div>
   }

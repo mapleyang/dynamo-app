@@ -24,9 +24,6 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    if(!sessionStorage.getItem("user")) {
-      // location.hash = "/login"
-    }
   }
 
   render() {

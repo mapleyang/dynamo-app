@@ -131,7 +131,7 @@ class PolicyDesc extends Component {
           <Card>
             <Card.Header
               title={this.state.detail.title}
-              thumb={"../static/insurance" + this.state.index + ".jpg"}/>
+              thumb={"./static/insurance" + this.state.index + ".jpg"}/>
             <Card.Body>
               <List renderHeader={() => this.state.detail.desc.title}>
                 {this.state.detail.desc.content.map(el => {

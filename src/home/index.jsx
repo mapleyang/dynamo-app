@@ -58,8 +58,8 @@ class Home extends Component {
           <TabBar.Item
             title="主页"
             key="home"
-            icon={{uri: '../static/home.svg' }}
-            selectedIcon={{uri: '../static/home-true.svg'}}
+            icon={{uri: './static/home.svg' }}
+            selectedIcon={{uri: './static/home-true.svg'}}
             selected={this.state.selectedTab === 'blueTab'}
             onPress={() => {
               this.setState({
@@ -71,8 +71,8 @@ class Home extends Component {
             {this.renderContent('home')}
           </TabBar.Item>
           <TabBar.Item
-            icon={{uri: '../static/policy.svg'}}
-            selectedIcon={{uri: '../static/policy-true.svg'}}
+            icon={{uri: './static/policy.svg'}}
+            selectedIcon={{uri: './static/policy-true.svg'}}
             title="保单"
             key="policy"
             selected={this.state.selectedTab === 'redTab'}
@@ -88,8 +88,8 @@ class Home extends Component {
           <TabBar.Item
             title="介绍"
             key="intr"
-            icon={{uri: '../static/intr.svg'}}
-            selectedIcon={{uri: '../static/intr-true.svg'}}
+            icon={{uri: './static/intr.svg'}}
+            selectedIcon={{uri: './static/intr-true.svg'}}
             title="介绍"
             key="intro"
             dot
@@ -105,8 +105,8 @@ class Home extends Component {
           <TabBar.Item
             title="我的"
             key="my"
-            icon={{ uri: '../static/my.svg' }}
-            selectedIcon={{ uri: '../static/my-true.svg' }}
+            icon={{ uri: './static/my.svg' }}
+            selectedIcon={{ uri: './static/my-true.svg' }}
             selected={this.state.selectedTab === 'yellowTab'}
             onPress={() => {
               this.setState({

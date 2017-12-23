@@ -36,7 +36,7 @@ class Intr extends Component {
           <Card>
             <Card.Header
               title="AmyChain 基于区块医疗保险应用"
-              thumb="../static/logo.png"/>
+              thumb="./static/logo.png"/>
             <Card.Body>
               <List renderHeader={() => '信任、存证、智能高效'}>
                 {this.state.data.map(el => {

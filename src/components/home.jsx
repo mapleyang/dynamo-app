@@ -60,7 +60,7 @@ class Home extends Component {
           保险产品
         </div>
         <div className="pro-list tab-content">
-          <img style={{width: "100%", height: "15rem"}}src="../static/beginning.jpg"/>
+          <img style={{width: "100%", height: "15rem"}}src="./static/beginning.jpg"/>
           <div className="item-title">
             保险推荐
           </div>
@@ -68,7 +68,7 @@ class Home extends Component {
             {this.state.insurance.map((el, index) => {
               return <div onClick={this.insuranceSelect.bind(this, el)} key={index}>
                 <Flex className="insurance-info">
-                  <Flex.Item className="insurance-img"><img src={"../static/insurance" + index + ".jpg"} /></Flex.Item>
+                  <Flex.Item className="insurance-img"><img src={"./static/insurance" + index + ".jpg"} /></Flex.Item>
                   <Flex.Item className="insurance-intr">
                     <div className="insurance-title">{el.title}</div>
                     <div className="insurance-item">
