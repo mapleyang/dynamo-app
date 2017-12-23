@@ -21,7 +21,12 @@ const AjaxJson = {
       contentType: "application/json",
       data: JSON.stringify(data),
       success:function(res){
-        resolve(res)
+        if(res.status === 8000) {
+          location.hash = "/login";
+        }
+        else {
+          resolve(res)
+        }
       },
       error:function(res){
         resolve(res)

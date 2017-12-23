@@ -60,7 +60,7 @@ class PolicyDetail extends Component {
           <div className="header-back" onClick={this.headerBackClick.bind(this)}>
             <Icon type="left" size="lg" />
           </div>
-          <div className="header-content">保险介绍</div>
+          <div className="header-content">保单详情</div>
         </div>
         <div className="flow-content tab-content">
           <Card>

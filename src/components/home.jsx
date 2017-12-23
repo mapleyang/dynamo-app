@@ -22,6 +22,12 @@ class Home extends Component {
         "age": "0至60周岁",
         "time": "1年",
         "content": "病种由原60中提升至88种、续保年龄延长至80周岁"
+      },{
+        "id": "1000003",
+        "title": "少儿超能宝两全保险",
+        "age": "0-17周岁",
+        "time": "30年",
+        "content": "身故或全残保险金 10万元/份 重大疾病保险金"
       }]
     }
   }
@@ -36,7 +42,8 @@ class Home extends Component {
     
   }
 
-  insuranceSelect () {
+  insuranceSelect (value) {
+    sessionStorage.setItem("productId", value.id)
     location.hash = "/policydesc";
   }
 

@@ -48,7 +48,7 @@ class BaseInfo extends Component {
         // }, (value) => {})
       }
       else {    //输入提示
-        Toast.fail("保存失败", 1)
+        Toast.info("请完善投保人信息", 1)
       }
     });
   }
@@ -70,37 +70,33 @@ class BaseInfo extends Component {
         <div className="flow-content tab-content">
           <List>
             <InputItem
-            {...getFieldProps('holderName', {initialValue: this.state.base ? this.state.base.holderName : ""}, {
-              rules: [{ required: true, message: '请输入投保人姓名' }],
-            })}
+            {...getFieldProps('holderName', 
+              {initialValue: this.state.base ? this.state.base.holderName : "",
+              rules: [{ required: true, message: '请输入投保人姓名' }]})}
             clear>
               投保人姓名
             </InputItem>
             <InputItem
-            {...getFieldProps('holderID', {initialValue: this.state.base ? this.state.base.holderID : ""}, {
-              rules: [{ required: true, message: '请输入投保人证件' }],
-            })}
+            {...getFieldProps('holderID', {initialValue: this.state.base ? this.state.base.holderID : "",
+              rules: [{ required: true, message: '请输入投保人姓名' }]})}
             clear>
               投保人证件
             </InputItem>
             <InputItem
-            {...getFieldProps('holderMobile', {initialValue: this.state.base ? this.state.base.holderMobile : ""}, {
-              rules: [{ required: true, message: '请输入投保人电话' }],
-            })}
+            {...getFieldProps('holderMobile', {initialValue: this.state.base ? this.state.base.holderMobile : "",
+              rules: [{ required: true, message: '请输入投保人姓名' }]})}
             clear>
               投保人电话
             </InputItem>
             <InputItem
-            {...getFieldProps('favoreeName', {initialValue: this.state.base ? this.state.base.favoreeName : ""},{
-              rules: [{ required: true, message: '请输入受益人姓名' }],
-            })}
+            {...getFieldProps('favoreeName', {initialValue: this.state.base ? this.state.base.favoreeName : "",
+              rules: [{ required: true, message: '请输入投保人姓名' }]})}
             clear>
               受益人姓名
             </InputItem>
             <InputItem
-            {...getFieldProps('favoreeID',  {initialValue: this.state.base ? this.state.base.favoreeID : ""}, {
-              rules: [{ required: true, message: '请输入受益人证件' }],
-            })}
+            {...getFieldProps('favoreeID',  {initialValue: this.state.base ? this.state.base.favoreeID : "",
+              rules: [{ required: true, message: '请输入投保人姓名' }]})}
             clear>
               受益人证件
             </InputItem>

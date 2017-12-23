@@ -39,8 +39,8 @@ class Login extends Component {
           password: md5(value.password),
         };
         AjaxJson.getResponse(url, data, "POST").then((value) => {
-          if(value.status = 2000) {
-            if(value.token !== undefined) {
+          if(value.status === 2000) {
+            if(value.data.token) {
               sessionStorage.setItem("user", value);
               location.hash = "/"
             }

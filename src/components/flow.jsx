@@ -3,7 +3,7 @@ import './index.less'
 import classnames from "classnames";
 import { createForm } from 'rc-form';
 import AjaxJson from "../utils/ajaxJson"
-import { Icon, List, Button, Picker, InputItem } from 'antd-mobile';
+import { Icon, List, Button, Picker, InputItem, Toast } from 'antd-mobile';
 const Item = List.Item;
 
 const district = [{
@@ -60,6 +60,20 @@ class Flow extends Component {
       promise: promise,
       reportData: reportData
     })
+    if(sessionStorage.getItem("policyID")) {
+      this.gatePolicyInfo();
+    }
+  }
+
+  //获取待提交保单列表
+  gatePolicyInfo (id) {
+    let url = `/api/policies${id}/detail`; 
+    let data = {};
+    AjaxJson.getResponse(url, data, "GET").then((value) => {
+      if(value.status = 2000) {
+
+      }
+    }, (value) => {})
   }
 
   headerBackClick () {
@@ -83,14 +97,19 @@ class Flow extends Component {
 
   saveClick () {
     let policy = JSON.parse(sessionStorage.getItem("policy"))
-    let url = "/api/policies"; 
-    policy.base.timeRange = this.state.timeRange;
-    policy.product.price = this.state.price.toString();
-    AjaxJson.getResponse(url, policy, "PUT").then((value) => {
-      if(value.status = 2000) {
-
-      }
-    }, (value) => {})
+    if(policy.base && policy.promise && this.state.price) {
+      let url = "/api/policies"; 
+      policy.base.timeRange = this.state.timeRange;
+      policy.product.price = this.state.price.toString();
+      AjaxJson.getResponse(url, policy, "PUT").then((value) => {
+        if(value.status = 2000) {
+          sessionStorage.removeItem("policyID")
+        }
+      }, (value) => {})
+    }
+    else {
+      Toast.info("请完善投保信息！！！", 1)
+    }
   }
 
 
