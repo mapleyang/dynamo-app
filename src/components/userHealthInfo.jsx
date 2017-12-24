@@ -31,7 +31,7 @@ class UserHealthInfo extends Component {
   }
 
   componentWillMount () {
-    this.getOrgs();
+    // this.getOrgs();
     let policy = JSON.parse(sessionStorage.getItem("policy"));
     if(policy.scheduleData) {
       this.setState({
@@ -70,7 +70,6 @@ class UserHealthInfo extends Component {
   }
 
   onChange = (files, type, index) => {
-    console.log(files, type, index);
     this.setState({
       files,
     });
@@ -106,14 +105,9 @@ class UserHealthInfo extends Component {
         policy.reportData = reportData;
         sessionStorage.setItem("policy", JSON.stringify(policy))
         window.history.back()
-        // AjaxJson.getResponse(url, data, "PUT").then((value) => {
-        //   if(value.status === 2000) {
-        //     window.history.back()
-        //   }
-        // }, (value) => {})
       }
-      else {    //输入提示
-
+      else {    
+        //输入提示
       }
     });
   }

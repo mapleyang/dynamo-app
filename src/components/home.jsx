@@ -38,10 +38,6 @@ class Home extends Component {
     this.getProductsList();
   }
 
-  componentDidMount () {
-    
-  }
-
   insuranceSelect (value) {
     sessionStorage.setItem("productId", value.id)
     location.hash = "/policydesc";

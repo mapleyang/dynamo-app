@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, hashHistory, IndexRoute, Link } from 'react-router';
+import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 
 import Home from './home/index';
 import Login from './components/login';
@@ -23,8 +23,6 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount () {
-  }
 
   render() {
     return (
@@ -50,4 +48,4 @@ ReactDOM.render(
       <Route path="userhealthinfo" component={UserHealthInfo} />
     </Route>
   </Router>
-, document.getElementById('dist'));
+, document.getElementById('App'));

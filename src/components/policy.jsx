@@ -42,26 +42,36 @@ class Policy extends Component {
               el.mainContent = "感谢您选择了本保险产品，请完善你的投保信息";
               break;
             case 2:
-              el.stateContent = "待体检";
-              el.mainContent = "您可以去您预约的体检机构进行相关体检";
+              el.stateContent = "待支付";
+              el.mainContent = "请前往支付你的保单，完成本次投保";
               stayPhysical.push(el)
               break;
             case 3:
-              el.stateContent = "待核保";
-              el.mainContent = "您的保单正在自动核保中...请耐心等待";
+              el.stateContent = "待体检";
+              el.mainContent = "您可以去您预约的体检机构进行相关体检";
               stayCheck.push(el)
               break;
             case 4:
+              el.stateContent = "待核保";
+              el.mainContent = "您的保单数据已经完善，正在等待核保...";
+              checkDone.push(el)
+              break;
+            case 5:
+              el.stateContent = "核保中";
+              el.mainContent = "您的保单正在审核中，请耐心等待...";
+              checkDone.push(el)
+              break;
+            case 6:
               el.stateContent = "核保成功";
               el.mainContent = "您的保单已经通过核保，正在等待保单签章...";
               checkDone.push(el)
               break;
-            case 5:
+            case 7:
               el.stateContent = "核保失败";
-              el.mainContent = "您的保单已经通过核保，正在等待保单签章...";
+              el.mainContent = "您的保单核保失败，请联系客服...";
               checkDone.push(el)
               break;
-            case 6: 
+            case 8: 
               el.stateContent = "已完成";
               el.mainContent = "您的保单已经签章成功，本保单已生效";
               policyDone.push(el)

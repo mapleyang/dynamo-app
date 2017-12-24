@@ -37,7 +37,8 @@ class Flow extends Component {
       timePrice: "",
       base: "",
       promise: "",
-      reportData: ""
+      reportData: "",
+      timeLabel: ""
     }
   }
 
@@ -90,6 +91,7 @@ class Flow extends Component {
         this.setState({
           price: el.price,
           timeRange: el.value,
+          timeLabel: el.label
         })   
       }
     })
@@ -144,6 +146,7 @@ class Flow extends Component {
           <List renderHeader={() => '保险信息'}>
             <Picker 
               data={district} 
+              extra={this.state.timeLabel}
               cols={1} 
               onOk={this.timeRangeChange.bind(this)}>
               <List.Item arrow="horizontal">保险时常</List.Item>

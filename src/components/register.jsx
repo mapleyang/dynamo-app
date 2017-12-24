@@ -61,9 +61,9 @@ class Register extends Component {
                 {...getFieldProps('email', {
                   rules: [{ required: true, message: '请输入您的邮箱' }],
                 })}
-                placeholder="请输入手机号"
+                placeholder="请输入您的邮箱"
               >
-                <div style={{ backgroundImage: 'url(./static/Phone.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
+                <div style={{ backgroundImage: 'url(./static/email.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
               </InputItem>
               <InputItem
                type="phone"

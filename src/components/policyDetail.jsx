@@ -34,8 +34,7 @@ class PolicyDetail extends Component {
   getPolicyDetail (id) {
     const _this = this;
     let url = `/api/policies/${id}/detail`;
-    let data = {};
-    AjaxJson.getResponse(url, data, "GET").then((value) => {
+    AjaxJson.getResponse(url, "", "GET").then((value) => {
       if(value.status === 2000) {
         value.data.map(el => {
           el.label = el.name;
@@ -66,7 +65,7 @@ class PolicyDetail extends Component {
           <Card>
             <Card.Header
               title="太健康·百万全家桶"
-              thumb="../static/insurance0.jpg"/>
+              thumb="./static/insurance0.jpg"/>
             <Card.Body>
               <List renderHeader={() => '保障全、双豁免、满期返更增值'}>
                 <Item>重疾轻症保障全</Item>

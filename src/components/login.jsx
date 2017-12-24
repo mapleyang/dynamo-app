@@ -35,7 +35,7 @@ class Login extends Component {
         let url = "/api/login";  
         let timestamp = Date.now();
         let data = {
-          email: value.mobile,
+          email: value.email,
           password: md5(value.password),
         };
         AjaxJson.getResponse(url, data, "POST").then((value) => {
@@ -70,17 +70,17 @@ class Login extends Component {
           <div className="login-form">
             <List renderHeader={() => ''}>
                <InputItem
-                {...getFieldProps('mobile', {
-                    rules: [{ required: true, message: '请输入手机号' }],
+                {...getFieldProps('email', {
+                    rules: [{ required: true, message: '请输入您的邮箱' }],
                   })}
-                placeholder="请输入手机号"
+                placeholder="请输入您的邮箱"
               >
-                <div style={{ backgroundImage: 'url(./static/Phone.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
+                <div style={{ backgroundImage: 'url(./static/email.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
               </InputItem>
               <InputItem
                 type="password"
                 {...getFieldProps('password', {
-                  rules: [{ required: true, message: '请输入手机号' }],
+                  rules: [{ required: true, message: '请输入您的密码' }],
                 })}
                 placeholder="请输入密码"
               >

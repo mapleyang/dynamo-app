@@ -25,8 +25,9 @@ const postcssOpts = {
   ],
 };
 
+
 module.exports = {
-  devtool: 'source-map', // or 'inline-source-map'
+  // devtool: 'source-map', // or 'inline-source-map'
   devServer: {
     disableHostCheck: true,
     proxy: {
@@ -34,9 +35,6 @@ module.exports = {
         target: "http://localhost:3003",
         pathRewrite: {"^/api" : ""}
       }
-      // '/api/*': {
-      //   target: 'http://localhost:3003',
-      // }
     },
   },
 
@@ -45,8 +43,8 @@ module.exports = {
   output: {
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',
-    path: path.join(__dirname, '/dist'),
-    publicPath: '/dist/'
+    path: path.join('E:/workspace/block/HybirdClient/www', '/dist'),
+    publicPath: '/dist'
   },
 
   resolve: {
