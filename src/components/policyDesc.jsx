@@ -11,6 +11,7 @@ const detailList = [{
   "title": "太健康·百万全家桶",
   "age": "90天至60周岁",
   "time": "1年",
+  category: "0001",
   "content": "住院医疗保险金，100万/人特许医疗",
   desc: {
     title: "全家统保更优惠，有无社保都可保",
@@ -26,6 +27,7 @@ const detailList = [{
   "id": "1000002",
   "title": "心安•怡住院医疗保险",
   "age": "0至60周岁",
+  category: "0002",
   "time": "1年",
   "content": "病种由原60中提升至88种、续保年龄延长至80周岁",
   desc: {
@@ -43,6 +45,7 @@ const detailList = [{
   "title": "少儿超能宝两全保险",
   "age": "0-17周岁",
   "time": "30年",
+  category: "0003",
   "content": "身故或全残保险金 10万元/份 重大疾病保险金",
   desc: {
     title: "保障全、双豁免、满期返更增值",
@@ -66,6 +69,7 @@ class PolicyDesc extends Component {
         "title": "太健康·百万全家桶",
         "age": "90天至60周岁",
         "time": "1年",
+        category: "0001",
         "content": "住院医疗保险金，100万/人特许医疗",
         desc: {
           title: "全家统保更优惠，有无社保都可保",
@@ -106,13 +110,11 @@ class PolicyDesc extends Component {
       base: "",
       product: {
         id: this.state.detail.id,
-        category: this.state.detail.detail,
+        category: this.state.detail.category,
         title: this.state.detail.title,
         content: this.state.detail.content
       },
       promise: "",
-      scheduleData: "",
-      reportData: "",
     }
     sessionStorage.setItem("policy", JSON.stringify(policy))
     location.hash = "/flow";

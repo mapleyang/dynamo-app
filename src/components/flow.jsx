@@ -3,8 +3,10 @@ import './index.less'
 import classnames from "classnames";
 import { createForm } from 'rc-form';
 import AjaxJson from "../utils/ajaxJson"
-import { Icon, List, Button, Picker, InputItem, Toast } from 'antd-mobile';
+import { Icon, List, Button, Picker, InputItem, Toast,Checkbox,TextareaItem } from 'antd-mobile';
 const Item = List.Item;
+const CheckboxItem = Checkbox.CheckboxItem;
+const AgreeItem = Checkbox.AgreeItem;
 
 const district = [{
   label: "一年",
@@ -27,12 +29,33 @@ const district = [{
   value: "30",
   price: 300000
 }]
+const agreeContent = "声明：本人承诺完全知晓本人的健康状况，确认健康告知内容属实。如有隐瞒或不实告知，保险公司有权解除保险合同，对于合同解除前发生的任何事故，保险公司不承担任何责任，并不退还保险费。";
 
 class Flow extends Component {
   constructor(props, context) {
     super(props)
     this.state = {
-      data: ['', '', ''],
+      promiseData: [{
+        name: "angiocarpy",
+        select: false,
+        label: "是否存在心血管系统疾病",
+        value: "1"
+      }, {
+        name: "breathing",
+        select: false,
+        label: "是否存在呼吸系统疾病",
+        value: "2"
+      }, {
+        name: "digestive",
+        select: false,
+        label: "是否存在消化系统疾病",
+        value: "3"
+      }, {
+        name: "disability",
+        select: false,
+        label: "是否存在残疾或功能障碍",
+        value: "4"
+      }],
       price: "",
       timePrice: "",
       base: "",
@@ -42,47 +65,8 @@ class Flow extends Component {
     }
   }
 
-  componentWillMount () {
-    let policy = JSON.parse(sessionStorage.getItem("policy"))
-    let base = "";
-    let promise = "";
-    let reportData = "";
-    if(policy.base) {
-      base = policy.base;
-    }
-    if(policy.promise) {
-      promise = policy.promise;
-    }
-    if(policy.reportData) {
-      reportData = policy.reportData;
-    }
-    this.setState({
-      base: base,
-      promise: promise,
-      reportData: reportData
-    })
-    if(sessionStorage.getItem("policyID")) {
-      this.gatePolicyInfo();
-    }
-  }
-
-  //获取待提交保单列表
-  gatePolicyInfo (id) {
-    let url = `/api/policies${id}/detail`; 
-    let data = {};
-    AjaxJson.getResponse(url, data, "GET").then((value) => {
-      if(value.status = 2000) {
-
-      }
-    }, (value) => {})
-  }
-
   headerBackClick () {
     window.history.back()
-  }
-
-  infoFillClick (value) {
-    location.hash = "/" + value;
   }
 
   timeRangeChange (value) {
@@ -98,21 +82,68 @@ class Flow extends Component {
   }
 
   saveClick () {
-    let policy = JSON.parse(sessionStorage.getItem("policy"))
-    if(policy.base && policy.promise && this.state.price) {
-      let url = "/api/policies"; 
-      policy.base.timeRange = this.state.timeRange;
-      policy.product.price = this.state.price.toString();
-      AjaxJson.getResponse(url, policy, "PUT").then((value) => {
-        if(value.status = 2000) {
-          sessionStorage.removeItem("policyID")
-          location.hash="/home";
+    this.props.form.validateFields((error, values) => {
+      let policy = JSON.parse(sessionStorage.getItem("policy"))
+      if(!error) {
+        if(policy.product) {
+          let url = "/api/policies"; 
+          let promise = this.state.promiseData.map(el => {
+            let item = {};
+            item.result = el.select ? "是" : "否";
+            item.content = el.label;
+            return item;
+          })
+          promise.push({
+            result: "是",
+            content: agreeContent
+          })
+          // if(values.other !== undefined) {
+          //   promise.push({
+          //     result: "是",
+          //     content: value.other
+          //   })
+          // }
+          // else {
+          //   promise.push({
+          //     result: "是",
+          //     content: value.other
+          //   })
+          // }
+          policy.base = values;
+          policy.promise = promise;
+          policy.base.timeRange = this.state.timeRange;
+          policy.product.price = this.state.price.toString();
+          console.log(policy)
+          AjaxJson.getResponse(url, policy, "PUT").then((value) => {
+            if(value.status === 2000) {
+              sessionStorage.removeItem("policyID")
+              sessionStorage.setItem("PID", value.data.policyID)
+              location.hash="/userhealthinfo";
+            }
+          }, (value) => {
+            Toast.info("", 1)
+          })
         }
-      }, (value) => {})
-    }
-    else {
-      Toast.info("请完善投保信息！！！", 1)
-    }
+        else {
+          Toast.info("提交无效！！！", 1)
+        }
+      }
+      else {    //输入提示
+        Toast.info("请完善投保信息！！！", 1)
+      }
+    });
+  }
+
+  onChange = (val) => {
+    let promiseData = this.state.promiseData.map(el => {
+      if(el.value === val) {
+        el.select = !el.select;
+      }
+      return el
+    });
+    this.setState({
+      promiseData: promiseData
+    })
   }
 
 
@@ -128,21 +159,53 @@ class Flow extends Component {
         </div>
         <div className="flow-content tab-content">
           <List className="my-list" renderHeader={() => '个人信息'}>
-            <Item arrow="horizontal" extra={this.state.base ? this.state.base.holderName : ""} onClick={this.infoFillClick.bind(this, "baseinfo")}>
-              投保人信息
-            </Item>
-            <Item
-              arrow="horizontal"
-              extra={this.state.promise ? "已完成" : ""}
-              onClick={this.infoFillClick.bind(this, "healthinfo")}>
-              健康告知
-            </Item>
-            <Item
-              arrow="horizontal"
-              extra={this.state.reportData ? "已完成" : ""}
-              onClick={this.infoFillClick.bind(this, "userhealthinfo")}>
-              健康数据
-            </Item>
+            <InputItem
+              {...getFieldProps('holderName', 
+                {initialValue: this.state.base ? this.state.base.holderName : "",
+                rules: [{ required: true, message: '请输入投保人姓名' }]})}
+              clear>
+                投保人姓名
+              </InputItem>
+              <InputItem
+              {...getFieldProps('holderID', {initialValue: this.state.base ? this.state.base.holderID : "",
+                rules: [{ required: true, message: '请输入投保人姓名' }]})}
+              clear>
+                投保人证件
+              </InputItem>
+              <InputItem
+              {...getFieldProps('holderMobile', {initialValue: this.state.base ? this.state.base.holderMobile : "",
+                rules: [{ required: true, message: '请输入投保人姓名' }]})}
+              clear>
+                投保人电话
+              </InputItem>
+              <InputItem
+              {...getFieldProps('favoreeName', {initialValue: this.state.base ? this.state.base.favoreeName : "",
+                rules: [{ required: true, message: '请输入投保人姓名' }]})}
+              clear>
+                受益人姓名
+              </InputItem>
+              <InputItem
+              {...getFieldProps('favoreeID',  {initialValue: this.state.base ? this.state.base.favoreeID : "",
+                rules: [{ required: true, message: '请输入投保人姓名' }]})}
+              clear>
+                受益人证件
+              </InputItem>
+          </List>
+          <List renderHeader={() => '是否曾患有或接受治疗过下列疾病？'}>
+            {this.state.promiseData.map(el => (
+              <CheckboxItem 
+              checked={el.select}
+              onChange={() => this.onChange(el.value)}>
+                {el.label}
+              </CheckboxItem>
+            ))}
+          </List>
+          <List renderHeader={() => '是否有其他疾病？'}>
+            <TextareaItem
+              rows={5}
+              count={100}
+              placeholder="请描述您的患病情况..."
+            />
           </List>
           <List renderHeader={() => '保险信息'}>
             <Picker 
@@ -154,6 +217,10 @@ class Flow extends Component {
             </Picker>
             <Item extra={this.state.price + "元"}>保险费用</Item>
           </List>
+           <AgreeItem 
+          className="agree-content" data-seed="statementId">
+            {agreeContent}
+          </AgreeItem>
           <Button style={{margin: "2rem"}} type="ghost" onClick={this.saveClick.bind(this)}>提交</Button>
         </div>
       </div>

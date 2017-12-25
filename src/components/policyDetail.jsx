@@ -25,10 +25,12 @@ class PolicyDetail extends Component {
   }
 
   componentWillMount () {
-    let param = location.hash.slice(18);
-    let index = param.indexOf("&");
-    let id = param.slice(0, index);
-    this.getPolicyDetail(id);
+    let PID = JSON.parse(sessionStorage.getItem("PID"))
+    this.getPolicyDetail(PID);
+  }
+
+  componentWillUnmount () {
+    sessionStorage.removeItem("PID")
   }
 
   //获取保单交易详情

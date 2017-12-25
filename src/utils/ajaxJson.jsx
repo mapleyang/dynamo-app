@@ -17,8 +17,8 @@ const AjaxJson = {
   Ajax: (url, data, type, resolve, reject) => {
     $.ajax({
       type: type,
-      // url: url,
-      url: "http://amy.wenchain.com" + url,
+      url: url,
+      // url: "http://amy.wenchain.com" + url,
       contentType: "application/json",
       data: JSON.stringify(data),
       success:function(res){

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './index.less'
 import classnames from "classnames";
 import AjaxJson from "../utils/ajaxJson"
-import { Icon, List, InputItem, Picker, ImagePicker, Button, DatePicker} from 'antd-mobile';
+import { Icon, List, InputItem, Picker, Button, DatePicker, Toast} from 'antd-mobile';
 import { createForm } from 'rc-form';
 const Item = List.Item;
 const nowTimeStamp = Date.now();
@@ -31,19 +31,7 @@ class UserHealthInfo extends Component {
   }
 
   componentWillMount () {
-    // this.getOrgs();
-    let policy = JSON.parse(sessionStorage.getItem("policy"));
-    if(policy.scheduleData) {
-      this.setState({
-        date: new Date(policy.scheduleData.date),
-        orgID: policy.scheduleData.orgID || ""
-      })
-    }
-    if(policy.reportData) {
-      this.setState({
-        reportData: policy.reportData
-      })
-    }
+    this.getOrgs();
   }
 
   //获取体检机构列表
@@ -53,13 +41,13 @@ class UserHealthInfo extends Component {
     let data = {};
     AjaxJson.getResponse(url, data, "GET").then((value) => {
       if(value.status === 2000) {
-        value.data.map(el => {
-          el.label = el.name;
-          el.value = el.orgId;
+        let orgData = value.data.map(el => {
+          el.label = el.Record.name;
+          el.value = el.Record.orgId;
           return el
         })
         _this.setState({
-          orgData: value
+          orgData: orgData
         })
       }
     }, (value) => {})
@@ -69,45 +57,35 @@ class UserHealthInfo extends Component {
     window.history.back()
   }
 
-  onChange = (files, type, index) => {
-    this.setState({
-      files,
-    });
-  }
-
   saveClick () {
     const _this = this;
     this.props.form.validateFields((error, value) => {
-      if(!error) {
-        let url = "/api/policies";  
+      let PID = JSON.parse(sessionStorage.getItem("PID"))
+      if(!error && PID) {
+        let url = `/api/policies/schedule/${PID}`;  
         let orgID = value.orgID && value.orgID.length !== 0 ? value.orgID[0] : "";
+        let orgValue = "";
+        this.state.orgData.forEach(el => {
+          if(el.value === orgID) {
+            orgValue = el;
+          }
+        })
         let date = new Date(this.state.date);
         let scheduleData = {
           date: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
-          orgID: orgID
-        };
-        let reportData = {
           orgID: orgID,
-          metadata: {
-            weightExponent: value.weightExponent || "",
-            bloodpressureExponent: value.bloodpressureExponent || "",
-            pulsepressureExponent: value.pulsepressureExponent || "",
-            plateletCount: value.plateletCount || "",
-            serum: value.serum || ""
+          orgName: orgValue || orgValue.label,
+          orgAddress: orgValue || orgValue.address
+        };
+        AjaxJson.getResponse(url, scheduleData, "PUT").then((value) => {
+          if(value.status === 2000) {
+            location.hash="/policydetail";
           }
-        }
-        let data = {
-          scheduleData,
-          reportData
-        }
-        let policy = JSON.parse(sessionStorage.getItem("policy"))
-        policy.scheduleData = scheduleData;
-        policy.reportData = reportData;
-        sessionStorage.setItem("policy", JSON.stringify(policy))
-        window.history.back()
+        }, (value) => {})
       }
       else {    
         //输入提示
+        Toast.info("提交无效", 1)
       }
     });
   }
@@ -140,43 +118,7 @@ class UserHealthInfo extends Component {
               <List.Item arrow="horizontal">体检日期</List.Item>
             </DatePicker>
           </List>
-          <List renderHeader={() => '个人健康情况'}>
-            <InputItem
-            {...getFieldProps('weightExponent', {initialValue: this.state.reportData.metadata ? this.state.reportData.metadata.weightExponent : ""},)}
-            clear>
-              体重指数
-            </InputItem>
-            <InputItem
-            {...getFieldProps('bloodpressureExponent', {initialValue: this.state.reportData.metadata ? this.state.reportData.metadata.bloodpressureExponent : ""})}
-            clear>
-              血压
-            </InputItem>
-            <InputItem
-            {...getFieldProps('pulsepressureExponent', {initialValue: this.state.reportData.metadata ? this.state.reportData.metadata.pulsepressureExponent : ""})}
-            clear>
-              脉压
-            </InputItem>
-            <InputItem
-            {...getFieldProps('plateletCount', {initialValue: this.state.reportData.metadata ? this.state.reportData.metadata.plateletCount : ""})}
-            clear>
-              血小板数
-            </InputItem>
-            <InputItem
-            {...getFieldProps('serum', {initialValue: this.state.reportData.metadata ? this.state.reportData.metadata.serum : ""})}
-            clear>
-              甘油三酯
-            </InputItem>
-          </List>
-          <List renderHeader={() => '个人健康资料'}>
-            <ImagePicker
-              className="img-picker"
-              onChange={this.onChange.bind(this)}
-              files={this.state.files}
-              onImageClick={(index, fs) => console.log(index, fs)}
-              selectable={this.state.files.length < 11}
-            />
-          </List>
-          <Button style={{margin: "2rem"}} type="ghost" onClick={this.saveClick.bind(this)}>保存</Button>
+          <Button style={{margin: "2rem"}} type="ghost" onClick={this.saveClick.bind(this)}>提交</Button>
         </div>
       </div>
     );

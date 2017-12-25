@@ -90,7 +90,8 @@ class Policy extends Component {
   }
 
   detailClick (value) {
-    location.hash = "/policydetail?id=" + value.policyID
+    location.hash = "/policydetail";
+    sessionStorage.setItem("PID", value.policyID)
   }
 
   getRow (value, index) {
