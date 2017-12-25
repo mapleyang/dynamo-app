@@ -44,22 +44,20 @@ class Policy extends Component {
             case 2:
               el.stateContent = "待支付";
               el.mainContent = "请前往支付你的保单，完成本次投保";
-              stayPhysical.push(el)
               break;
             case 3:
               el.stateContent = "待体检";
               el.mainContent = "您可以去您预约的体检机构进行相关体检";
-              stayCheck.push(el)
+              stayPhysical.push(el)
               break;
             case 4:
               el.stateContent = "待核保";
               el.mainContent = "您的保单数据已经完善，正在等待核保...";
-              checkDone.push(el)
+              stayCheck.push(el)
               break;
             case 5:
               el.stateContent = "核保中";
               el.mainContent = "您的保单正在审核中，请耐心等待...";
-              checkDone.push(el)
               break;
             case 6:
               el.stateContent = "核保成功";
@@ -120,13 +118,13 @@ class Policy extends Component {
       case "1":
         data = this.state.data;
         break;
-      case "2":
+      case "3":
         data = this.state.stayPhysical;
         break;
-      case "3":
+      case "4":
         data = this.state.stayCheck;
         break;
-      case "4":
+      case "5":
         data = this.state.checkDone;
         break;
       case "6": 
@@ -148,9 +146,9 @@ class Policy extends Component {
   render() {
     const tabs = [
       { title: '全部', sub: "1" },
-      { title: '待体检', sub: "2" },
-      { title: '待核保', sub: "3" },
-      { title: '核保完成', sub: "4" },
+      { title: '待体检', sub: "3" },
+      { title: '待核保', sub: "4" },
+      { title: '核保完成', sub: "5" },
       { title: '已完成', sub: "6" }];
     return (
       <div className="policy">

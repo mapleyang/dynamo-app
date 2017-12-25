@@ -20,6 +20,7 @@ class PolicyDetail extends Component {
   constructor(props, context) {
     super(props)
     this.state = {
+      detail: ""
     }
   }
 
@@ -33,16 +34,11 @@ class PolicyDetail extends Component {
   //获取保单交易详情
   getPolicyDetail (id) {
     const _this = this;
-    let url = `/api/policies/${id}/detail`;
+    let url = `/api/policies/${id}`;
     AjaxJson.getResponse(url, "", "GET").then((value) => {
       if(value.status === 2000) {
-        value.data.map(el => {
-          el.label = el.name;
-          el.value = el.orgId;
-          return el
-        })
         _this.setState({
-          orgData: value
+          detail: value.data
         })
       }
     }, (value) => {})
@@ -50,6 +46,44 @@ class PolicyDetail extends Component {
 
   headerBackClick () {
     window.history.back()
+  }
+
+  getDetailContent () {
+    let content = "";
+    if(this.state.detail) {
+      content = <Card>
+        <Card.Header
+          title={this.state.detail.product.title}
+          thumb="./static/insurance0.jpg"/>
+        <Card.Body>
+          <List renderHeader={() => '区块链保单'}>
+            <Item>区块链凭证</Item>
+            <Item multipleLine align="top" wrap>
+               <p>保单凭证：{this.state.detail.baseinfo.policyID}</p>
+               <p>签章凭证：{this.state.detail.signature.hash}</p>
+            </Item>
+            <Item>保单信息</Item>
+            <Item multipleLine align="top" wrap>
+              <p>投保单号：{this.state.detail.baseinfo.transactionID}</p>
+              <p>投保人姓名：{this.state.detail.baseinfo.policyHolderName}</p>
+              <p>投保人证件：{this.state.detail.baseinfo.policyID}</p>
+              <p>投保人手机：{this.state.detail.baseinfo.policyHolderMobile}</p>
+              <p>受益人姓名：{this.state.detail.baseinfo.favoreeName}</p>
+              <p>受益人证件：{this.state.detail.baseinfo.favoreeID}</p>
+              <p>保险时长：{this.state.detail.baseinfo.timeRange}年</p>
+              <p>保单状态：{this.state.detail.baseinfo.transactionDesc}</p>
+              <p>保单费用：{this.state.detail.product.price}</p>
+            </Item>
+            <Item>产品介绍</Item>
+            <Item multipleLine align="top" wrap>
+              {this.state.detail.product.content}
+            </Item>
+          </List>
+        </Card.Body>
+        <Card.Footer extra={<div style={{color: "#199ed8"}}>保险条款详情</div>} />
+      </Card>
+    }
+    return content
   }
 
   render() {
@@ -62,24 +96,7 @@ class PolicyDetail extends Component {
           <div className="header-content">保单详情</div>
         </div>
         <div className="flow-content tab-content">
-          <Card>
-            <Card.Header
-              title="太健康·百万全家桶"
-              thumb="./static/insurance0.jpg"/>
-            <Card.Body>
-              <List renderHeader={() => '保障全、双豁免、满期返更增值'}>
-                <Item>重疾轻症保障全</Item>
-                <Item multipleLine align="top" wrap>
-                  “少儿超能宝”保障计划涵盖多达88种重大疾病。每份保额10万元，轻症保额2万元，而且轻症保额独立，轻症理赔后不影响后续重疾保障及满期保险金给付。
-                </Item>
-                <Item>满期反还更增值</Item>
-                <Item multipleLine align="top" wrap>
-                  宝宝出生满30天就可以投保为您宝宝满月送上一份全面保障的大礼。固定保障期限为30年，满期可领取相当于主附险保费总额150%的满期保险金，投入全部拿回，更有50%的增额收益。
-                </Item>
-              </List>
-            </Card.Body>
-            <Card.Footer extra={<div style={{color: "#199ed8"}}>保险条款详情</div>} />
-          </Card>
+          {this.getDetailContent()}
         </div>
       </div>
     );

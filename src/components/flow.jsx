@@ -106,6 +106,7 @@ class Flow extends Component {
       AjaxJson.getResponse(url, policy, "PUT").then((value) => {
         if(value.status = 2000) {
           sessionStorage.removeItem("policyID")
+          location.hash="/home";
         }
       }, (value) => {})
     }
