@@ -49,7 +49,7 @@ class Intr extends Component {
                 })}
               </List>
             </Card.Body>
-            <Card.Footer extra={<div style={{color: "#199ed8"}}>AmyChain系统介绍</div>} />
+            <Card.Footer extra={<div>AmyChain系统介绍</div>} />
           </Card>
         </div>
       </div>

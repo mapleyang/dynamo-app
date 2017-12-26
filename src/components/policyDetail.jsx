@@ -6,21 +6,12 @@ import AjaxJson from "../utils/ajaxJson"
 import { Icon, Button, Card, List } from 'antd-mobile';
 const Item = List.Item;
 
-const detail = {
-  "id": "1000001",
-  category: "001",
-  "title": "太健康·百万全家桶",
-  "img": "insurance0",
-  "age": "90天至60周岁",
-  "time": "1年",
-  "content": "住院医疗保险金，100万/人特许医疗"
-}
-
+const detail = {"docType":"policy","signature":{"hash":"","CreateTime":"2017-12-22 06:31:14","SetSchduleTime":"","SetReportTime":"","UnderWritingTime":"","SigTime":""},"product":{"productId":"P201712010001","title":"百万健康每一天","content":"关注健康每一天，测试阿萨德饭卡上的罚款是的adsfkjakdfas撒打发时间的发酵时","price":100.93,"category":"001"},"baseinfo":{"policyHolderName":"TestUser0001","policyHolderID":"101910199112129099","policyHolderMobile":"18688866666","favoreeName":"Favoree001","favoreeID":"102912199712018897","policyID":"944092950265204736","timeRange":"2","transactionID":"944092950265204736","transactionState":1,"transactionDesc":"待提交"},"scheduleData":{"orgId":"","date":"","orgAddress":"","orgName":""},"report":{"orgId":"","evaluate":0,"metadata":{"weightExponent":0,"bloodpressureExponent":"","pulsepressureExponent":"","plateletCount":0,"serum":0}},"usePromise":[{"result":"","content":""}]}
 class PolicyDetail extends Component {
   constructor(props, context) {
     super(props)
     this.state = {
-      detail: ""
+      detail: detail
     }
   }
 
@@ -82,7 +73,7 @@ class PolicyDetail extends Component {
             </Item>
           </List>
         </Card.Body>
-        <Card.Footer extra={<div style={{color: "#199ed8"}}>保险条款详情</div>} />
+        <Card.Footer extra={<div>保险条款详情</div>} />
       </Card>
     }
     return content

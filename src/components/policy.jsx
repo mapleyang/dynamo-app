@@ -8,8 +8,18 @@ class Policy extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      tabData: [],
-      data: [],
+      tabData: [{
+        policyID: "944092950265204736",
+        state: 2,
+        updateTime: "2017-12-22 14:50:35",
+        mainContent: "test"
+      }],
+      data: [{
+        policyID: "944092950265204736",
+        state: 2,
+        updateTime: "2017-12-22 14:50:35",
+        mainContent: "test"
+      }],
       stayPhysical: [],
       stayCheck: [],
       checkDone: [],
@@ -102,7 +112,7 @@ class Policy extends Component {
         color: '#888',
         fontSize: "1.2rem",
         borderBottom: '1px solid #F6F6F6',
-      }}>{value.createTime}<span style={{float: "right", color: '#FF6E27'}}>{value.stateContent}</span></div>
+      }}>{value.updateTime}<span style={{float: "right", color: '#FF6E27'}}>{value.stateContent}</span></div>
       <div style={{ display: '-webkit-box', display: 'flex', padding: '1.2rem 0' }}>
         <img style={{ height: '5.2rem', marginRight: '1.2rem' }} src={"./static/insurance" + img + ".jpg"} alt="" />
         <div style={{ lineHeight: 1 }}>

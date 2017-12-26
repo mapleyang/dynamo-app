@@ -61,7 +61,8 @@ class Flow extends Component {
       base: "",
       promise: "",
       reportData: "",
-      timeLabel: ""
+      timeLabel: "",
+      buttonLoading: false
     }
   }
 
@@ -82,10 +83,14 @@ class Flow extends Component {
   }
 
   saveClick () {
+    const _this = this;
     this.props.form.validateFields((error, values) => {
       let policy = JSON.parse(sessionStorage.getItem("policy"))
       if(!error) {
         if(policy.product) {
+          _this.setState({
+            buttonLoading: true
+          })
           let url = "/api/policies"; 
           let promise = this.state.promiseData.map(el => {
             let item = {};
@@ -97,23 +102,22 @@ class Flow extends Component {
             result: "是",
             content: agreeContent
           })
-          // if(values.other !== undefined) {
-          //   promise.push({
-          //     result: "是",
-          //     content: value.other
-          //   })
-          // }
-          // else {
-          //   promise.push({
-          //     result: "是",
-          //     content: value.other
-          //   })
-          // }
-          policy.base = values;
+          let other = {
+            result: values.other ? "是" : "",
+            content: values.other
+          }
+          promise.push(other)
+          policy.base = {
+            holderName: values.holderName,
+            holderID: values.holderID,
+            holderMobile: values.holderMobile,
+            favoreeName: values.favoreeName,
+            favoreeID: values.favoreeID
+          };
           policy.promise = promise;
           policy.base.timeRange = this.state.timeRange;
           policy.product.price = this.state.price.toString();
-          console.log(policy)
+          debugger
           AjaxJson.getResponse(url, policy, "PUT").then((value) => {
             if(value.status === 2000) {
               sessionStorage.removeItem("policyID")
@@ -121,7 +125,7 @@ class Flow extends Component {
               location.hash="/userhealthinfo";
             }
           }, (value) => {
-            Toast.info("", 1)
+            Toast.info("请求失败", 1)
           })
         }
         else {
@@ -204,6 +208,7 @@ class Flow extends Component {
             <TextareaItem
               rows={5}
               count={100}
+              {...getFieldProps('other')}
               placeholder="请描述您的患病情况..."
             />
           </List>
@@ -218,10 +223,11 @@ class Flow extends Component {
             <Item extra={this.state.price + "元"}>保险费用</Item>
           </List>
            <AgreeItem 
+           {...getFieldProps('agreeContent', { rules: [{ required: true, message: '请同意相关条款' }]})}
           className="agree-content" data-seed="statementId">
             {agreeContent}
           </AgreeItem>
-          <Button style={{margin: "2rem"}} type="ghost" onClick={this.saveClick.bind(this)}>提交</Button>
+          <Button loading={this.state.buttonLoading} style={{margin: "2rem"}} type="ghost" onClick={this.saveClick.bind(this)}>提交</Button>
         </div>
       </div>
     );

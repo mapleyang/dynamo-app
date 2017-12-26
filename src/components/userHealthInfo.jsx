@@ -42,7 +42,7 @@ class UserHealthInfo extends Component {
     AjaxJson.getResponse(url, data, "GET").then((value) => {
       if(value.status === 2000) {
         let orgData = value.data.map(el => {
-          el.label = el.Record.name;
+          el.label = el.Record.orgName;
           el.value = el.Record.orgId;
           return el
         })
@@ -60,7 +60,7 @@ class UserHealthInfo extends Component {
   saveClick () {
     const _this = this;
     this.props.form.validateFields((error, value) => {
-      let PID = JSON.parse(sessionStorage.getItem("PID"))
+      let PID = JSON.parse(sessionStorage.getItem("PID"));
       if(!error && PID) {
         let url = `/api/policies/schedule/${PID}`;  
         let orgID = value.orgID && value.orgID.length !== 0 ? value.orgID[0] : "";
@@ -74,8 +74,8 @@ class UserHealthInfo extends Component {
         let scheduleData = {
           date: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
           orgID: orgID,
-          orgName: orgValue || orgValue.label,
-          orgAddress: orgValue || orgValue.address
+          orgName: orgValue.label,
+          orgAddress: orgValue.address
         };
         AjaxJson.getResponse(url, scheduleData, "PUT").then((value) => {
           if(value.status === 2000) {
