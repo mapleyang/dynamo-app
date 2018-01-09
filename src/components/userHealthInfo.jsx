@@ -15,8 +15,7 @@ class UserHealthInfo extends Component {
       date: now,
       data: ['', '', ''],
       orgID: "",
-      files: [],
-      reportData: {},
+      buttonLoading: false,
       orgData: [{
         label: "北京知春路分店",
         value: "100001",
@@ -62,10 +61,13 @@ class UserHealthInfo extends Component {
     this.props.form.validateFields((error, value) => {
       let PID = JSON.parse(sessionStorage.getItem("PID"));
       if(!error && PID) {
+        _this.setState({
+          buttonLoading: true
+        })
         let url = `/api/policies/schedule/${PID}`;  
         let orgID = value.orgID && value.orgID.length !== 0 ? value.orgID[0] : "";
         let orgValue = "";
-        this.state.orgData.forEach(el => {
+        _this.state.orgData.forEach(el => {
           if(el.value === orgID) {
             orgValue = el;
           }
@@ -74,17 +76,18 @@ class UserHealthInfo extends Component {
         let scheduleData = {
           date: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
           orgID: orgID,
-          orgName: orgValue.label,
-          orgAddress: orgValue.address
+          orgName: orgValue.label || "",
+          orgAddress: orgValue.address || ""
         };
         AjaxJson.getResponse(url, scheduleData, "PUT").then((value) => {
           if(value.status === 2000) {
             location.hash="/policydetail";
           }
-        }, (value) => {})
+        }, (value) => {
+          Toast.info("请求失败", 1)
+        })
       }
       else {    
-        //输入提示
         Toast.info("提交无效", 1)
       }
     });
@@ -118,7 +121,7 @@ class UserHealthInfo extends Component {
               <List.Item arrow="horizontal">体检日期</List.Item>
             </DatePicker>
           </List>
-          <Button style={{margin: "2rem"}} type="ghost" onClick={this.saveClick.bind(this)}>提交</Button>
+          <Button loading={this.state.buttonLoading} style={{margin: "2rem"}} type="ghost" onClick={this.saveClick.bind(this)}>提交</Button>
         </div>
       </div>
     );

@@ -117,11 +117,10 @@ class Flow extends Component {
           policy.promise = promise;
           policy.base.timeRange = this.state.timeRange;
           policy.product.price = this.state.price.toString();
-          debugger
           AjaxJson.getResponse(url, policy, "PUT").then((value) => {
             if(value.status === 2000) {
               sessionStorage.removeItem("policyID")
-              sessionStorage.setItem("PID", value.data.policyID)
+              sessionStorage.setItem("PID", JSON.stringify(value.data.policyID))
               location.hash="/userhealthinfo";
             }
           }, (value) => {

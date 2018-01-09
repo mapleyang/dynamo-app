@@ -8,18 +8,8 @@ class Policy extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      tabData: [{
-        policyID: "944092950265204736",
-        state: 2,
-        updateTime: "2017-12-22 14:50:35",
-        mainContent: "test"
-      }],
-      data: [{
-        policyID: "944092950265204736",
-        state: 2,
-        updateTime: "2017-12-22 14:50:35",
-        mainContent: "test"
-      }],
+      tabData: [],
+      data: [],
       stayPhysical: [],
       stayCheck: [],
       checkDone: [],
@@ -37,7 +27,7 @@ class Policy extends Component {
     let url = "/api/policies";
     let data = {
       offset: 0,
-      limit: 20,
+      limit: 1000,
     }
     AjaxJson.getResponse(url, data, "GET").then((value) => {
       if(value.status = 2000) {
@@ -45,7 +35,8 @@ class Policy extends Component {
         let stayCheck = [];
         let checkDone = [];
         let policyDone = [];
-        let data = value.data.map(el => {
+        let array = value.data.reverse();
+        let data = array.map(el => {
           switch(el.state) {
             case 1:
               el.stateContent = "待提交";
@@ -101,7 +92,7 @@ class Policy extends Component {
 
   detailClick (value) {
     location.hash = "/policydetail";
-    sessionStorage.setItem("PID", value.policyID)
+    sessionStorage.setItem("PID", JSON.stringify(value.policyID))
   }
 
   getRow (value, index) {

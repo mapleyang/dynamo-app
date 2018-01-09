@@ -87,7 +87,7 @@ class PolicyDesc extends Component {
   }
 
   componentWillMount () {
-    let productId = sessionStorage.getItem("productId");
+    let productId = JSON.parse(sessionStorage.getItem("productId"));
     if(productId) {
       let detail = "";
       detailList.forEach((el,index) => {

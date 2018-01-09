@@ -19,23 +19,28 @@ class Home extends Component {
     }
   }
 
-  componentDidMount () {
+  componentWillMount () {
+    let tab = sessionStorage.getItem("tab")
+    this.setState({
+      selectedTab: tab || 'blueTab'
+    })
   }
 
 
   renderContent(pageText) {
+    sessionStorage.setItem("tab", pageText)
     let el;
     switch(pageText) {
-      case "home":
+      case "blueTab":
         el = <HomeComponent />
         break;
-      case "policy":
+      case "redTab":
         el = <PolicyComponent />
         break;
-      case "intr":
+      case "greenTab":
         el = <IntrComponent />
         break;
-      case "my":
+      case "yellowTab":
         el = <MyComponent />
         break;
       default:
@@ -68,7 +73,7 @@ class Home extends Component {
             }}
             data-seed="logId"
           >
-            {this.state.selectedTab === 'blueTab' ? this.renderContent('home') : ""}
+            {this.state.selectedTab === 'blueTab' ? this.renderContent('blueTab') : ""}
           </TabBar.Item>
           <TabBar.Item
             icon={{uri: './static/policy.svg'}}
@@ -83,7 +88,7 @@ class Home extends Component {
             }}
             data-seed="logId1"
           >
-            {this.state.selectedTab === 'redTab' ? this.renderContent('policy') : ""}
+            {this.state.selectedTab === 'redTab' ? this.renderContent('redTab') : ""}
           </TabBar.Item>
           <TabBar.Item
             title="介绍"
@@ -100,7 +105,7 @@ class Home extends Component {
               });
             }}
           >
-            {this.state.selectedTab === 'greenTab' ? this.renderContent('intr'): ""}
+            {this.state.selectedTab === 'greenTab' ? this.renderContent('greenTab'): ""}
           </TabBar.Item>
           <TabBar.Item
             title="我的"
@@ -114,7 +119,7 @@ class Home extends Component {
               });
             }}
           >
-            {this.state.selectedTab === 'yellowTab' ? this.renderContent('my') : ""}
+            {this.state.selectedTab === 'yellowTab' ? this.renderContent('yellowTab') : ""}
           </TabBar.Item>
         </TabBar>
       </div>

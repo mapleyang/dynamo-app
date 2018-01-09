@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './index.less'
 import AjaxJson from "../utils/ajaxJson"
 import classnames from "classnames";
-import { Flex } from 'antd-mobile';
+import { Flex, List } from 'antd-mobile';
 
 
 class Home extends Component {
@@ -39,7 +39,7 @@ class Home extends Component {
   }
 
   insuranceSelect (value) {
-    sessionStorage.setItem("productId", value.id)
+    sessionStorage.setItem("productId", JSON.stringify(value.id))
     location.hash = "/policydesc";
   }
 
@@ -61,28 +61,30 @@ class Home extends Component {
             保险推荐
           </div>
           <div className="insurance-list">
-            {this.state.insurance.map((el, index) => {
-              return <div onClick={this.insuranceSelect.bind(this, el)} key={index}>
-                <Flex className="insurance-info">
-                  <Flex.Item className="insurance-img"><img src={"./static/insurance" + index + ".jpg"} /></Flex.Item>
-                  <Flex.Item className="insurance-intr">
-                    <div className="insurance-title">{el.title}</div>
-                    <div className="insurance-item">
-                      <span className="insurance-item-title">承保年龄</span>
-                      <span>{el.age}</span>
-                    </div>
-                    <div className="insurance-item">
-                      <span className="insurance-item-title">保障期限</span>
-                      <span>{el.time}</span>
-                    </div>
-                    <div className="insurance-item">
-                      <span className="insurance-item-title">主要保障</span>
-                      <span>{el.content}</span>
-                    </div>
-                  </Flex.Item>
-                </Flex>
-              </div>
-            })}
+            <List>
+              {this.state.insurance.map((el, index) => {
+                return <div onClick={this.insuranceSelect.bind(this, el)} key={index}>
+                  <Flex className="insurance-info">
+                    <Flex.Item className="insurance-img"><img src={"./static/insurance" + index + ".jpg"} /></Flex.Item>
+                    <Flex.Item className="insurance-intr">
+                      <div className="insurance-title">{el.title}</div>
+                      <div className="insurance-item">
+                        <span className="insurance-item-title">承保年龄</span>
+                        <span>{el.age}</span>
+                      </div>
+                      <div className="insurance-item">
+                        <span className="insurance-item-title">保障期限</span>
+                        <span>{el.time}</span>
+                      </div>
+                      <div className="insurance-item">
+                        <span className="insurance-item-title">主要保障</span>
+                        <span>{el.content}</span>
+                      </div>
+                    </Flex.Item>
+                  </Flex>
+                </div>
+              })}
+            </List>
           </div>
         </div>
       </div>
