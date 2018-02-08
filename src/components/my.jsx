@@ -40,6 +40,12 @@ class My extends Component {
               extra=""
               onClick={() => {}}
               className="list-item-font"
+            >我的积分钱包</Item>
+            <Item
+              thumb="./static/key.svg"
+              extra=""
+              onClick={() => {}}
+              className="list-item-font"
             >我的区块密钥</Item>
             <Item
               thumb="./static/address.svg"
@@ -57,7 +63,7 @@ class My extends Component {
             >我的保单</Item>
             <Item
               thumb="./static/data.svg"
-              onClick={() => {}}
+              onClick={() => {location.hash = "/userdata"}}
               arrow="horizontal">
               我的健康数据
             </Item>

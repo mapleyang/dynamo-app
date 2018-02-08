@@ -1,3 +1,4 @@
+const theme = require('./package.json').theme;
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -74,7 +75,7 @@ module.exports = {
         test: /\.less$/i, use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            'css-loader', { loader: 'postcss-loader', options: postcssOpts }, 'less-loader'
+            'css-loader', { loader: 'postcss-loader', options: postcssOpts }, {loader: 'less-loader', options: {modifyVars: theme}}
           ]
         })
       },

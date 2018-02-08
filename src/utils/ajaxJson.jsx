@@ -23,7 +23,7 @@ const AjaxJson = {
       data: JSON.stringify(data),
       success:function(res){
         if(res.status === 8000) {
-          location.hash = "/login";
+          // location.hash = "/login";
         }
         else {
           resolve(res)

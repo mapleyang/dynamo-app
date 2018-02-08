@@ -12,6 +12,9 @@ import Flow from './components/flow';
 import BaseInfo from './components/baseInfo';
 import HealthInfo from './components/healthInfo';
 import UserHealthInfo from './components/userHealthInfo';
+import UserData from './components/userData';
+import UserInfo from './components/userInfo';
+import Authorize from './components/authorize';
 
 import './index.less';
 
@@ -22,7 +25,6 @@ class App extends React.Component {
     this.state = {
     }
   }
-
 
   render() {
     return (
@@ -46,6 +48,9 @@ ReactDOM.render(
       <Route path="baseinfo" component={BaseInfo} />
       <Route path="healthinfo" component={HealthInfo} />
       <Route path="userhealthinfo" component={UserHealthInfo} />
+      <Route path="userdata" component={UserData} />
+      <Route path="userinfo" component={UserInfo} />
+      <Route path="authorize" component={Authorize} />
     </Route>
   </Router>
 , document.getElementById('App'));

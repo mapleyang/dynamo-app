@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "lib/index",
   "scripts": {
-    "start": "webpack-dev-server --host 0.0.0.0 --port 3000",
-    "build": "webpack -p --display-optimization-bailout --progress --colors"
+    "start": "webpack-dev-server --host 0.0.0.0 --port 9000",
+    "build": "webpack --watch -p --display-optimization-bailout --progress --colors"
   },
   "license": "MIT",
   "dependencies": {
@@ -42,5 +42,17 @@
     "webpack-bundle-analyzer": "^2.8.1",
     "webpack-dev-server": "^2.5.0",
     "webpack-visualizer-plugin": "^0.1.11"
+  },
+  "theme": {
+    "hd": "5px",
+    "brand-primary": "#449A99",
+    "color-text-base":  "#449A99",
+    "fill-base": "#449A99",
+    "border-color-base": "#449A99",
+    "brand-primary": "#449A99",
+    "brand-primary-tap": "#449A99",
+    "tab-bar-fill": "#449A99",
+    "primary-button-fill": "#449A99",
+    "ghost-button-color": "#449A99"
   }
 }

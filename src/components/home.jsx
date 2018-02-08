@@ -28,6 +28,12 @@ class Home extends Component {
         "age": "0-17周岁",
         "time": "30年",
         "content": "身故或全残保险金 10万元/份 重大疾病保险金"
+      },{
+        "id": "1000004",
+        "title": "少儿超能宝两全保险",
+        "age": "0-17周岁",
+        "time": "30年",
+        "content": "身故或全残保险金 10万元/份 重大疾病保险金"
       }]
     }
   }
@@ -47,21 +53,32 @@ class Home extends Component {
   getProductsList () {
   }
 
-
-
   render() {
     return (
       <div className="home">
         <div className="header">
-          保险产品
+          首页
         </div>
         <div className="pro-list tab-content">
-          <img style={{width: "100%", height: "15rem"}}src="./static/beginning.jpg"/>
+          <div className="pro-tabs">
+            <Flex className="pro-tabs-list">
+              <Flex.Item><img src="./static/score.png" /><div className="pro-tabs-name">Dynamo积分</div></Flex.Item>
+              <Flex.Item><img src="./static/baoxian.png" /><div className="pro-tabs-name">医疗保险</div></Flex.Item>
+              <Flex.Item><img src="./static/hospital.png" /><div className="pro-tabs-name">健康服务</div></Flex.Item>
+              <Flex.Item><img src="./static/ai.png" /><div className="pro-tabs-name">数据服务</div></Flex.Item>
+            </Flex>
+            <div className="pro-score-tip">
+              <div className="pro-score-tip-area">
+                <div className="pro-score-tip-title">怎么获取Dynamo积分?</div>
+                <div className="pro-score-tip-content">建立健康档案，上传高质量数据获取Dynamo积分。</div>
+              </div>
+            </div>
+          </div>
           <div className="item-title">
-            保险推荐
+            <span className="item-title-adivce">保险推荐</span><span className="item-title-score">加入区块链保险计划获取积分</span>
           </div>
           <div className="insurance-list">
-            <List>
+            <div>
               {this.state.insurance.map((el, index) => {
                 return <div onClick={this.insuranceSelect.bind(this, el)} key={index}>
                   <Flex className="insurance-info">
@@ -84,7 +101,7 @@ class Home extends Component {
                   </Flex>
                 </div>
               })}
-            </List>
+            </div>
           </div>
         </div>
       </div>

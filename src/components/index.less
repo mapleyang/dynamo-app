@@ -1,13 +1,13 @@
 .header {
   height: 4rem;
-  background: #199ed8;
+  background: #fff;
   line-height: 4rem;
   text-align: center;
   font-size: 1.5rem;
-  color: #fff;
   position: fixed;
   width: 100%;
   z-index: 1000;
+  border-bottom: 1px #ddd solid;
 }
 .login {
   .login-button {
@@ -57,10 +57,19 @@
 }
 .item-title {
   height: 3rem;
-  background: #eeeeee;
+  background: #fff;
   line-height: 3rem;
   padding-left: 1.2rem;
   color: rgb(51, 163, 244);
+  border-bottom: 1px #eee solid;
+  .item-title-score {
+    float: right;
+    margin-right: 1rem;
+    color: #C2A986;
+  }
+  item-title-advice {
+    color: rgb(51, 163, 244);
+  }
 }
 .tab-content {
   background: #F8F8F9;
@@ -70,6 +79,41 @@
 }
 .home {
   .pro-list {
+    .pro-tabs {
+      padding-top: 2rem;
+      background: #fff;
+      margin-bottom: 0.5rem;
+      .pro-tabs-list {
+        margin-bottom: 2rem;
+        .am-flexbox-item {
+          text-align: center;
+        }
+        img {
+          width: 60%;
+        }
+        .pro-tabs-name {
+          margin-top: 0.4rem;
+        }
+      }
+    }
+    .pro-score-tip {
+      padding-bottom: 1rem;
+      .pro-score-tip-area {
+        margin: 0 auto;
+        height: 5rem;
+        width: 90%;
+        background: #FFFDDC;
+        .pro-score-tip-title {
+          text-align: center;
+          line-height: 3rem;
+          color: #EDB32A;
+        }
+        .pro-score-tip-content {
+          text-align: center;
+          color: #999;
+        }
+      }
+    }
     .pro-carousel {
       img {
         width: 100%;
@@ -82,6 +126,7 @@
       padding: 1rem 1rem;
       img {
         width: 100%;
+        border-radius: 5px;
       }
     }
     .insurance-info {
