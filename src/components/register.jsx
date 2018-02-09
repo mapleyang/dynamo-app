@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './index.less'
 import AjaxJson from "../utils/ajaxJson"
 import classnames from "classnames";
-import { Icon, List, InputItem, Button  } from 'antd-mobile';
+import { Icon, List, InputItem, Button, Toast  } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import md5 from "md5";
 const Item = List.Item;
@@ -36,10 +36,13 @@ class Register extends Component {
            if(value.status === 2000) {
             window.history.back();
            }
+           else {
+              Toast.fail('注册请求失败！！！', 1);
+           }
         }, (value) => {})
       }
       else {    //输入提示
-
+        Toast.fail('请输入注册信息！！！', 1);
       }
     });
   }
@@ -84,7 +87,7 @@ class Register extends Component {
                 <div style={{ backgroundImage: 'url(./static/password.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
               </InputItem>
             </List>
-            <Button type="primary" className={classnames({
+            <Button type="primary" size="small" className={classnames({
               "login-button": true,
               "login-button-disabel": this.state.loginVisble
             })} onClick={this.registerClick.bind(this)}>注册</Button>

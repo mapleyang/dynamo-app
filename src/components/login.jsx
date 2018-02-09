@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './index.less'
 import AjaxJson from "../utils/ajaxJson"     
 import classnames from "classnames";
-import { Icon, List, InputItem, Button  } from 'antd-mobile';
+import { Icon, List, InputItem, Button, Toast  } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import md5 from "md5";
 const Item = List.Item;
@@ -45,10 +45,13 @@ class Login extends Component {
               location.hash = "/"
             }
           }
+          else {
+            Toast.fail('登陆失败！！！', 1);
+          }
         }, (value) => {})
       }
       else {    //输入提示
-
+        Toast.fail('请输入您的邮箱、密码', 1);
       }
     });
   }
@@ -87,7 +90,7 @@ class Login extends Component {
                 <div style={{ backgroundImage: 'url(./static/password.svg)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
               </InputItem>
             </List>
-            <Button type="primary" className={classnames({
+            <Button type="primary" size="small" className={classnames({
               "login-button": true,
               "login-button-disabel": this.state.loginVisble
             })} onClick={this.loginClick.bind(this)}>登录</Button>

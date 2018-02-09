@@ -28,12 +28,6 @@ class Home extends Component {
         "age": "0-17周岁",
         "time": "30年",
         "content": "身故或全残保险金 10万元/份 重大疾病保险金"
-      },{
-        "id": "1000004",
-        "title": "少儿超能宝两全保险",
-        "age": "0-17周岁",
-        "time": "30年",
-        "content": "身故或全残保险金 10万元/份 重大疾病保险金"
       }]
     }
   }
@@ -74,7 +68,7 @@ class Home extends Component {
             <div className="pro-score-tip">
               <div className="pro-score-tip-area" onClick={this.getScoreClick.bind(this)}>
                 <div className="pro-score-tip-title">怎么获取Dynamo积分?</div>
-                <div className="pro-score-tip-content">建立健康档案，上传高质量数据获取Dynamo积分。</div>
+                <div className="pro-score-tip-content">建立健康档案，上传高质量健康数据获取Dynamo积分。</div>
               </div>
             </div>
           </div>
