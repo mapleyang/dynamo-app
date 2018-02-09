@@ -63,7 +63,7 @@ class Home extends Component {
         <div className="header">
           首页
         </div>
-        <div className="pro-list tab-content" style={{height: screen.height - 50, overflow: "auto"}}>
+        <div className="pro-list tab-content" style={{height: screen.height - 50, overflow: "auto", "-webkit-overflow-scrolling": "touch"}}>
           <div className="pro-tabs">
             <Flex className="pro-tabs-list">
               <Flex.Item><img src="./static/score.png" /><div className="pro-tabs-name">Dynamo积分</div></Flex.Item>
