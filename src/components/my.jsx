@@ -17,7 +17,7 @@ class My extends Component {
 
   render() {
     return (
-      <div className="my" style={{height: screen.height - 50, overflow: "auto", "-webkit-overflow-scrolling": "touch"}}>
+      <div className="my" style={{height: screen.height - 50, "-webkit-overflow-scrolling": "touch"}}>
         <div className="my-area">
           <div className="my-intr">
             <div className="my-intr-title">
