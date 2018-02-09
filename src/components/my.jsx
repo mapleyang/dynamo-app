@@ -36,7 +36,7 @@ class My extends Component {
           </div>
           <List className="my-list-certificate" renderHeader={() => ''}>
             <Item
-              thumb="./static/key.svg"
+              thumb="./static/score-icon.svg"
               extra=""
               onClick={() => {}}
               className="list-item-font"

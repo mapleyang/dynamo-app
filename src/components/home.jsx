@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './index.less'
 import AjaxJson from "../utils/ajaxJson"
 import classnames from "classnames";
-import { Flex, List } from 'antd-mobile';
+import { Flex, List, Button } from 'antd-mobile';
 
 
 class Home extends Component {
@@ -53,6 +53,10 @@ class Home extends Component {
   getProductsList () {
   }
 
+  getScoreClick () {
+    location.hash = "/userdata"
+  }
+
   render() {
     return (
       <div className="home">
@@ -68,7 +72,7 @@ class Home extends Component {
               <Flex.Item><img src="./static/ai.png" /><div className="pro-tabs-name">数据服务</div></Flex.Item>
             </Flex>
             <div className="pro-score-tip">
-              <div className="pro-score-tip-area">
+              <div className="pro-score-tip-area" onClick={this.getScoreClick.bind(this)}>
                 <div className="pro-score-tip-title">怎么获取Dynamo积分?</div>
                 <div className="pro-score-tip-content">建立健康档案，上传高质量数据获取Dynamo积分。</div>
               </div>
@@ -81,24 +85,24 @@ class Home extends Component {
             <div>
               {this.state.insurance.map((el, index) => {
                 return <div onClick={this.insuranceSelect.bind(this, el)} key={index}>
-                  <Flex className="insurance-info">
-                    <Flex.Item className="insurance-img"><img src={"./static/insurance" + index + ".jpg"} /></Flex.Item>
-                    <Flex.Item className="insurance-intr">
+                  <div className="insurance-info">
+                    <div className="insurance-img"><img src={"./static/insurance" + index + ".jpg"} /></div>
+                    <div className="insurance-intr">
                       <div className="insurance-title">{el.title}</div>
                       <div className="insurance-item">
                         <span className="insurance-item-title">承保年龄</span>
                         <span>{el.age}</span>
                       </div>
                       <div className="insurance-item">
-                        <span className="insurance-item-title">保障期限</span>
-                        <span>{el.time}</span>
-                      </div>
-                      <div className="insurance-item">
                         <span className="insurance-item-title">主要保障</span>
                         <span>{el.content}</span>
                       </div>
-                    </Flex.Item>
-                  </Flex>
+                     <div className="insurance-item">
+                        <span className="insurance-item-title">保障期限</span>
+                        <span>{el.time}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               })}
             </div>
