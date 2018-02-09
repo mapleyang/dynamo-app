@@ -8,9 +8,7 @@ class Policy extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      tabData: [{
-        stateContent: 2
-      }],
+      tabData: [],
       data: [],
       stayPhysical: [],
       stayCheck: [],

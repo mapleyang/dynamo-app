@@ -30,12 +30,12 @@ class Intr extends Component {
     return (
       <div className="intr">
         <div className="header">
-          区块链应用介绍
+          DynamoChain应用介绍
         </div>
         <div className="block-intr tab-content" style={{height: screen.height - 50, "-webkit-overflow-scrolling": "touch"}}>
           <Card>
             <Card.Header
-              title="AmyChain 基于区块医疗保险应用"
+              title="DynamoChain 基于区块链医疗保险应用"
               thumb="./static/logo.png"/>
             <Card.Body>
               <List renderHeader={() => '信任、存证、智能高效'}>
@@ -49,7 +49,7 @@ class Intr extends Component {
                 })}
               </List>
             </Card.Body>
-            <Card.Footer extra={<div>AmyChain系统介绍</div>} />
+            <Card.Footer extra={<div>DynamoChain系统介绍</div>} />
           </Card>
         </div>
       </div>
