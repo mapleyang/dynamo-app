@@ -44,7 +44,7 @@ module.exports = {
   output: {
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',
-    path: path.join('E:/workspace/block/HybirdClient/www', '/dist'),
+    path: path.join(__dirname, '/dist'),
     publicPath: '/dist'
   },
 
