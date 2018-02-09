@@ -154,10 +154,7 @@ class Policy extends Component {
       { title: '已完成', sub: "6" }];
     return (
       <div className="policy">
-        <div className="header">
-          保单
-        </div>
-        <div className="policy-list tab-content">
+        <div className="policy-list">
           <Tabs 
           tabs={tabs}
           onChange={this.tabChange.bind(this)}>
