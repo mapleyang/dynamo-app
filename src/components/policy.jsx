@@ -8,7 +8,9 @@ class Policy extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      tabData: [],
+      tabData: [{
+        stateContent: 2
+      }],
       data: [],
       stayPhysical: [],
       stayCheck: [],
@@ -30,7 +32,7 @@ class Policy extends Component {
       limit: 1000,
     }
     AjaxJson.getResponse(url, data, "GET").then((value) => {
-      if(value.status = 2000) {
+      if(value.status === 2000) {
         let stayPhysical = [];
         let stayCheck = [];
         let checkDone = [];
@@ -105,7 +107,7 @@ class Policy extends Component {
         borderBottom: '1px solid #F6F6F6',
       }}>{value.updateTime}<span style={{float: "right", color: '#FF6E27'}}>{value.stateContent}</span></div>
       <div style={{ display: '-webkit-box', display: 'flex', padding: '1.2rem 0' }}>
-        <img style={{ height: '5.2rem', marginRight: '1.2rem' }} src={"./static/insurance" + img + ".jpg"} alt="" />
+        <img style={{ height: '5.2rem', marginRight: '1.2rem', borderRadius: "5px"}} src={"./static/insurance" + img + ".jpg"} alt="" />
         <div style={{ lineHeight: 1 }}>
           <div style={{ marginBottom: '0.8rem', fontWeight: 'bold' }}>{value.mainContent}</div>
           <div style={{ paddingTop: '2rem', color: '#FF6E27' }}><span>查看保单详情>></span></div>

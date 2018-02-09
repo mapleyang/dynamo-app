@@ -12,7 +12,7 @@ import Flow from './components/flow';
 import BaseInfo from './components/baseInfo';
 import HealthInfo from './components/healthInfo';
 import UserHealthInfo from './components/userHealthInfo';
-import UserData from './components/userData';
+import Record from './components/userData/record';
 import UserInfo from './components/userInfo';
 import Authorize from './components/authorize';
 
@@ -48,7 +48,7 @@ ReactDOM.render(
       <Route path="baseinfo" component={BaseInfo} />
       <Route path="healthinfo" component={HealthInfo} />
       <Route path="userhealthinfo" component={UserHealthInfo} />
-      <Route path="userdata" component={UserData} />
+      <Route path="record" component={Record} />
       <Route path="userinfo" component={UserInfo} />
       <Route path="authorize" component={Authorize} />
     </Route>

@@ -32,7 +32,7 @@ class Intr extends Component {
         <div className="header">
           区块链应用介绍
         </div>
-        <div className="block-intr tab-content" style={{height: screen.height - 50, overflow: "auto", "-webkit-overflow-scrolling": "touch"}}>
+        <div className="block-intr tab-content" style={{height: screen.height - 50, "-webkit-overflow-scrolling": "touch"}}>
           <Card>
             <Card.Header
               title="AmyChain 基于区块医疗保险应用"

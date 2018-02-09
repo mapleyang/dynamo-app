@@ -63,7 +63,7 @@ class My extends Component {
             >我的保单</Item>
             <Item
               thumb="./static/data.svg"
-              onClick={() => {location.hash = "/userdata"}}
+              onClick={() => {location.hash = "/record"}}
               arrow="horizontal">
               我的健康数据
             </Item>

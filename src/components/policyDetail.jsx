@@ -16,8 +16,8 @@ class PolicyDetail extends Component {
   }
 
   componentWillMount () {
-    let PID = JSON.parse(sessionStorage.getItem("PID"))
-    this.getPolicyDetail(PID);
+    // let PID = JSON.parse(sessionStorage.getItem("PID"))
+    // this.getPolicyDetail(PID);
   }
 
   componentWillUnmount () {
@@ -51,7 +51,7 @@ class PolicyDetail extends Component {
         <Card.Body>
           <List renderHeader={() => '区块链保单'}>
             <Item>区块链凭证</Item>
-            <Item multipleLine align="top" wrap>
+            <Item multipleLine align="top" wrap className="sign-seal">
                <p>保单凭证：{this.state.detail.baseinfo.policyID}</p>
                <p>签章凭证：{this.state.detail.signature.hash}</p>
             </Item>
